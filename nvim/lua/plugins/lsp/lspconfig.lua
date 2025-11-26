@@ -1,8 +1,8 @@
 --  Language Server Protocol
 
-return { 
+return {
   "neovim/nvim-lspconfig",
-  event =  "Filetype",
+  event = "Filetype",
   dependencies = {
     "williamboman/mason.nvim",
     "neovim/nvim-lspconfig",
@@ -12,7 +12,7 @@ return {
   },
   config = function()
     local lspconfig = require "lspconfig"
-    
+
     -- Setup Mason to automatically install LSP servers
     require('mason').setup({
       ui = {
@@ -43,7 +43,7 @@ return {
     --   },
     --   capabilities = capabilities
     -- }
-    
+
     -- Vue, Javascript, Typescript
     -- lspconfig.ts_ls.setup {
     --   on_attach = on_attach,
@@ -60,15 +60,18 @@ return {
     --   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue"}
     -- }
 
-      lspconfig.volar.setup {
-      filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue"},
-      init_options =  {
+    lspconfig.volar.setup {
+      filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+      init_options = {
         vue = {
           hybridMode = false,
         },
+        typescript = {
+          tsdk = vim.fn.getcwd() .. '/node_modules/typescript/lib'
+        }
       },
-    } 
-   
+    }
+
 
     -- Lua
     lspconfig.lua_ls.setup {
@@ -106,11 +109,11 @@ return {
     vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
     vim.keymap.set('n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
 
-      vim.diagnostic.config({
+    vim.diagnostic.config({
       virtual_text = false,
       float = {
         source = true,
       }
     })
-   end,
+  end,
 }
