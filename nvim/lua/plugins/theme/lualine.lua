@@ -1,40 +1,31 @@
--- Status line
-
-local lazy_status = require "lazy.status"
+local lazy_status = require("lazy.status")
 
 local function indent()
   if vim.o.expandtab then
     return "SW:" .. vim.o.shiftwidth
-  else
-    return "TS:" .. vim.o.tabstop
   end
+  return "TS:" .. vim.o.tabstop
 end
 
 local function lsp()
-  local clients = vim.lsp.get_clients()
-  local buf = vim.api.nvim_get_current_buf()
-  clients = vim
-    .iter(clients)
-    :filter(function(client)
-      return client.attached_buffers[buf]
-    end)
-    :filter(function(client)
-      return client.name ~= "GitHub Copilot"
-    end)
-    :map(function(client)
-      return " " .. client.name
-    end)
-    :totable()
-  local info = table.concat(clients, " ")
-  if info == "" then
-    return "No attached LSP server"
-  else
-    return info
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  local names = {}
+
+  for _, client in ipairs(clients) do
+    if client.name ~= "GitHub Copilot" then
+      table.insert(names, client.name)
+    end
   end
+
+  if #names == 0 then
+    return "No LSP"
+  end
+
+  return " " .. table.concat(names, ", ")
 end
 
 local function dap()
-  ---@diagnostic disable-next-line: redefined-local
   local dap = package.loaded["dap"]
   if dap then
     return dap.status()
@@ -43,7 +34,6 @@ local function dap()
 end
 
 local function osv()
-  ---@diagnostic disable-next-line: redefined-local
   local osv = package.loaded["osv"]
   if osv and osv.is_running() then
     return "Running as debuggee"
@@ -52,16 +42,19 @@ local function osv()
 end
 
 local function dap_or_lsp()
-  if osv() ~= "" then
-    return osv()
-  elseif dap() ~= "" then
-    return dap()
-  else
-    return lsp()
+  local osv_status = osv()
+  if osv_status ~= "" then
+    return osv_status
   end
+
+  local dap_status = dap()
+  if dap_status ~= "" then
+    return dap_status
+  end
+
+  return lsp()
 end
 
----@type LazyPluginSpec
 return {
   "nvim-lualine/lualine.nvim",
   init = function()
@@ -69,10 +62,22 @@ return {
   end,
   event = "VeryLazy",
   dependencies = {
-    { "nvim-tree/nvim-web-devicons" },
-    { "ofseed/copilot-status.nvim" },
+    "nvim-tree/nvim-web-devicons",
+    "ofseed/copilot-status.nvim",
   },
   opts = {
+    options = {
+      icons_enabled = true,
+      theme = "nightfly",
+      disabled_filetypes = {
+        statusline = { "alpha" },
+      },
+      always_divide_middle = true,
+      globalstatus = true,
+      section_separators = { left = "", right = "" },
+      component_separators = { left = "", right = "" },
+    },
+
     sections = {
       lualine_a = {
         {
@@ -80,6 +85,7 @@ return {
           icon = "",
         },
       },
+
       lualine_b = {
         {
           "branch",
@@ -97,9 +103,11 @@ return {
           end,
         },
       },
+
       lualine_c = {
         dap_or_lsp,
       },
+
       lualine_x = {
         {
           lazy_status.updates,
@@ -107,10 +115,10 @@ return {
           color = { fg = "#ff9e64" },
         },
         {
-          name = "overseer-placeholder",
           function()
             return ""
           end,
+          name = "overseer-placeholder",
         },
         "copilot",
         indent,
@@ -120,6 +128,7 @@ return {
         },
         "fileformat",
       },
+
       lualine_y = {
         "diagnostics",
         {
@@ -127,6 +136,7 @@ return {
           icon = "",
         },
       },
+
       lualine_z = {
         {
           "location",
@@ -134,19 +144,7 @@ return {
         },
       },
     },
-    options = {
-      icons_enabled = true,
-      theme = "auto",
-      disabled_filetypes = {
-        statusline = {
-          "alpha",
-        },
-      },
-      always_divide_middle = true,
-      globalstatus = false,
-      section_separators = { left = "", right = "" },
-      component_separators = { left = "", right = "" },
-    },
+
     extensions = {
       "man",
       "quickfix",

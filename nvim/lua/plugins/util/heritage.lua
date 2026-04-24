@@ -1,1 +1,1 @@
-return { 'jessarcher/vim-heritage' }
+return { "jessarcher/vim-heritage" }

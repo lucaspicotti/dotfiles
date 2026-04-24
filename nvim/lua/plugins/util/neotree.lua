@@ -1,31 +1,31 @@
 return {
-  'nvim-neo-tree/neo-tree.nvim',
-  cmd = 'Neotree',
+  "nvim-neo-tree/neo-tree.nvim",
+  cmd = "Neotree",
   keys = {
-    { '<leader>n', ':Neotree reveal toggle<CR>' },
+    { "<leader>n", "<cmd>Neotree reveal toggle<CR>", desc = "Neo-tree" },
   },
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+    "nvim-tree/nvim-web-devicons",
     "MunifTanjim/nui.nvim",
     {
-      's1n7ax/nvim-window-picker',
+      "s1n7ax/nvim-window-picker",
       opts = {
         filter_rules = {
           autoselect_one = true,
           include_current_win = false,
           bo = {
-            filetype = { 'neo-tree', "neo-tree-popup", "notify" },
-            buftype = { 'terminal', "quickfix" },
+            filetype = { "neo-tree", "neo-tree-popup", "notify" },
+            buftype = { "terminal", "quickfix" },
           },
         },
         highlights = {
           statusline = {
             focused = {
-              bg = '#9d7cd8',
+              bg = "#9d7cd8",
             },
             unfocused = {
-              bg = '#9d7cd8',
+              bg = "#9d7cd8",
             },
           },
         },
@@ -44,7 +44,7 @@ return {
     source_selector = {
       winbar = true,
       statusline = false,
-      separator = { left = "", right= "" },
+      separator = { left = "", right = "" },
       show_separator_on_edge = true,
       highlight_tab = "SidebarTabInactive",
       highlight_tab_active = "SidebarTabActive",
@@ -55,10 +55,10 @@ return {
     event_handlers = {
       {
         event = "file_opened",
-        handler = function (file_path)
+        handler = function()
           require("neo-tree.command").execute({ action = "close" })
         end,
-      }
+      },
     },
     default_component_configs = {
       indent = {
@@ -81,10 +81,10 @@ return {
           ".git",
         },
       },
-      -- follow_current_file = {
-      --   enabled = true,
-      -- },
-      group_empty_dirs = false
+      follow_current_file = {
+        enabled = true,
+      },
+      group_empty_dirs = false,
     },
   },
 }

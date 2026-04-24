@@ -1,1 +1,1 @@
-return { 'tpope/vim-eunuch' }
+return { "tpope/vim-eunuch" }

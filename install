@@ -1,19 +1,97 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-DOTFILES=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+DOTFILES="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+BIN_DIR="$HOME/.local/bin"
+BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 
-# Kitty
-rm -rf $HOME/.config/kitty
-ln -s $DOTFILES/kitty $HOME/.config/kitty
+log() {
+  printf '[dotfiles] %s\n' "$1"
+}
 
-# Tmux
-rm -rf $HOME/.tmux.conf
-ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
+warn() {
+  printf '[dotfiles][warn] %s\n' "$1" >&2
+}
 
-mkdir -p $HOME/.local/bin
+backup_if_exists() {
+  local target="$1"
 
-rm -rf $HOME/.local/bin/t
-ln -s $DOTFILES/scripts/t $HOME/.local/bin/t
+  if [ -e "$target" ] || [ -L "$target" ]; then
+    mkdir -p "$BACKUP_DIR"
+    mv "$target" "$BACKUP_DIR/"
+    log "backup criado para: $target"
+  fi
+}
 
-rm -rf $HOME/.config/nvim
-ln -s $DOTFILES/nvim $HOME/.config/nvim
+link_path() {
+  local source="$1"
+  local target="$2"
+
+  mkdir -p "$(dirname "$target")"
+
+  if [ -L "$target" ] && [ "$(readlink "$target")" = "$source" ]; then
+    log "já está correto: $target"
+    return
+  fi
+
+  backup_if_exists "$target"
+  ln -s "$source" "$target"
+  log "linkado: $target -> $source"
+}
+
+require_cmd() {
+  local cmd="$1"
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    warn "comando não encontrado: $cmd"
+  fi
+}
+
+main() {
+  log "iniciando instalação"
+
+  mkdir -p "$CONFIG_DIR"
+  mkdir -p "$BIN_DIR"
+
+  require_cmd git
+  require_cmd nvim
+  require_cmd tmux
+  require_cmd kitty
+  require_cmd fish
+  require_cmd fzf
+
+  # kitty
+  if [ -d "$DOTFILES/kitty" ]; then
+    link_path "$DOTFILES/kitty" "$CONFIG_DIR/kitty"
+  fi
+
+  # tmux
+  if [ -f "$DOTFILES/tmux/tmux.conf" ]; then
+    link_path "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
+  fi
+
+  # script t
+  if [ -f "$DOTFILES/scripts/t" ]; then
+    link_path "$DOTFILES/scripts/t" "$BIN_DIR/t"
+    chmod +x "$BIN_DIR/t"
+  fi
+
+  # nvim
+  if [ -d "$DOTFILES/nvim" ]; then
+    link_path "$DOTFILES/nvim" "$CONFIG_DIR/nvim"
+  fi
+
+  # fish
+  if [ -d "$DOTFILES/fish" ]; then
+    link_path "$DOTFILES/fish" "$CONFIG_DIR/fish"
+  else
+    warn "pasta fish/ não encontrada; pulando configuração do fish"
+  fi
+
+  log "instalação concluída"
+  if [ -d "$BACKUP_DIR" ]; then
+    log "backups salvos em: $BACKUP_DIR"
+  fi
+}
+
+main "$@"

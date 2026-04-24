@@ -4,23 +4,18 @@ return {
   priority = 1000,
   config = function()
     require("dashboard").setup({
-      theme = "hyper", --  theme is doom and hyper default is hyper
-      disable_move = false, --  default is false disable move keymap for hyper
-      shortcut_type = "number", --  shorcut type "letter" or "number"
-      change_to_vcs_root = false, -- default is false,for open file in hyper mru. it will change to the root of vcs
-      config = { --  config used for theme
+      theme = "hyper",
+      disable_move = false,
+      shortcut_type = "number",
+      change_to_vcs_root = false,
+      config = {
         header = {
-[[                                                                        ]],
-[[     .-') _     ('-.                      (`-.              _   .-')    ]],
-[[    ( OO ) )  _(  OO)                   _(OO  )_           ( '.( OO )_  ]],
-[[,--./ ,--,'  (,------.  .-'),-----. ,--(_/   ,. \  ,-.-')   ,--.   ,--.)]],
-[[|   \ |  |\   |  .---' ( OO'  .-.  '\   \   /(__/  |  |OO)  |   `.'   | ]],
-[[|    \|  | )  |  |     /   |  | |  | \   \ /   /   |  |  \  |         | ]],
-[[|  .     |/  (|  '--.  \_) |  |\|  |  \   '   /,   |  |(_/  |  |'.'|  | ]],
-[[|  |\    |    |  .--'    \ |  | |  |   \     /__) ,|  |_.'  |  |   |  | ]],
-[[|  | \   |    |  `---.    `'  '-'  '    \   /    (_|  |     |  |   |  | ]],
-[[`--'  `--'    `------'      `-----'      `-'       `--'     `--'   `--' ]],
-[[                                                                        ]],
+          [[███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗]],
+          [[████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║]],
+          [[██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║]],
+          [[██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║]],
+          [[██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║]],
+          [[╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
         },
         packages = { enable = true },
         project = { enable = true },
@@ -30,13 +25,13 @@ return {
             icon = "󰊳 ",
             desc = "Update Lazy",
             group = "@property",
-            action = "require('lazy').update()",
+            action = "Lazy update",
             key = "l",
           },
           {
             icon = "󰊳 ",
             desc = "Update Mason",
-            group = "number",
+            group = "Number",
             action = "MasonToolsUpdate",
             key = "m",
           },
@@ -49,7 +44,7 @@ return {
           },
           {
             icon = "󰝰 ",
-            desc = "Neo Tree",
+            desc = "Neo-tree",
             group = "@type",
             action = "Neotree toggle",
             key = "n",
@@ -57,16 +52,11 @@ return {
         },
       },
       hide = {
-        statusline = false, -- hide statusline default is true
-        tabline = true, -- hide the tabline
-        winbar = true, -- hide winbar
+        statusline = false,
+        tabline = true,
+        winbar = true,
       },
-      preview = {
-        -- command,       -- preview command
-        -- file_path,     -- preview file path
-        -- file_height,   -- preview file height
-        -- file_width,    -- preview file width
-      },
+      preview = {},
     })
   end,
 }

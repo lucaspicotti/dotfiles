@@ -1,88 +1,75 @@
---  Language Server Protocol
-
 return {
   "neovim/nvim-lspconfig",
-  event = "Filetype",
+  event = "FileType",
   dependencies = {
-    "williamboman/mason.nvim",
-    "neovim/nvim-lspconfig",
-
-    'williamboman/mason-lspconfig.nvim',
-    "b0o/SchemaStore.nvim",
+    "mason-org/mason.nvim",
+    "mason-org/mason-lspconfig.nvim",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/nvim-cmp"
   },
   config = function()
-    local lspconfig = require "lspconfig"
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    -- Setup Mason to automatically install LSP servers
-    require('mason').setup({
+    local on_attach = function(_, bufnr)
+      local map = function(mode, lhs, rhs, desc)
+        vim.keymap.set(mode, lhs, rhs, {
+          buffer = bufnr,
+          silent = true,
+          desc = desc,
+        })
+      end
+
+      map("n", "<leader>d", vim.diagnostic.open_float, "Line Diagnostics")
+      map("n", "gd", "<cmd>Telescope lsp_definitions<CR>", "Go to Definition")
+      map("n", "ga", vim.lsp.buf.code_action, "Code Action")
+      map("n", "gi", "<cmd>Telescope lsp_implementations<CR>", "Go to Implementation")
+      map("n", "gr", "<cmd>Telescope lsp_references<CR>", "References")
+      map("n", "K", vim.lsp.buf.hover, "Hover")
+      map("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
+      map("n", "<leader>lr", "<cmd>LspRestart<CR>", "Restart LSP")
+    end
+
+    -- Mason
+    require("mason").setup({
       ui = {
         height = 0.8,
       },
     })
-    require('mason-lspconfig').setup({ automatic_installation = true })
 
-    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-    -- PHP
-    lspconfig.phpactor.setup {
+    require("mason-lspconfig").setup({
+      ensure_installed = {
+        "phpactor",
+        "lua_ls",
+      },
+      automatic_enable = false,
+    })
+
+    -- PHP (phpactor)
+    vim.lsp.config("phpactor", {
+      capabilities = capabilities,
       on_attach = on_attach,
       filetypes = { "php" },
       init_options = {
         ["language_server_phpstan.enabled"] = false,
         ["language_server_psalm.enabled"] = false,
         ["language_server_php_cs_fixer.enabled"] = true,
-      }
-    }
-
-    -- lspconfig.intelephense.setup {
-    --   commands = {
-    --     IntelephenseIndex = {
-    --       function()
-    --         vim.lsp.buf.execute_command({ command = 'intelephense.index.workspace' })
-    --       end,
-    --     },
-    --   },
-    --   capabilities = capabilities
-    -- }
-
-    -- Vue, Javascript, Typescript
-    -- lspconfig.ts_ls.setup {
-    --   on_attach = on_attach,
-    --   capabilities = capabilities,
-    --   init_options = {
-    --     plugins = {
-    --       {
-    --         name = "@vue/typescript-plugin",
-    --         location = "/usr/local/lib/node_modules/@vue/language-server",
-    --         languages = { "vue" },
-    --       },
-    --     },
-    --   },
-    --   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue"}
-    -- }
-
-    lspconfig.volar.setup {
-      filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-      init_options = {
-        vue = {
-          hybridMode = false,
-        },
-        typescript = {
-          tsdk = vim.fn.getcwd() .. '/node_modules/typescript/lib'
-        }
       },
-    }
-
+    })
 
     -- Lua
-    lspconfig.lua_ls.setup {
-      on_attach = function(client)
-        client.server_capabilities.documentFormattingProvider = false
-      end,
+    vim.lsp.config("lua_ls", {
       capabilities = capabilities,
+      on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        on_attach(client, bufnr)
+      end,
       settings = {
         Lua = {
           runtime = {
             version = "LuaJIT",
+          },
+          diagnostics = {
+            globals = { "vim" },
           },
           hint = {
             enable = true,
@@ -98,22 +85,20 @@ return {
           },
         },
       },
-    }
-    -- Keymaps
-    vim.keymap.set('n', '<Leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>')
-    vim.keymap.set('n', 'gd', ':Telescope lsp_definitions<CR>')
-    vim.keymap.set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-    vim.keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
-    vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
-    vim.keymap.set('n', '<Leader>lr', ':LspRestart<CR>', { silent = true })
-    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-    vim.keymap.set('n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+    })
 
+    -- Enable LSPs
+    vim.lsp.enable({
+      "phpactor",
+      "lua_ls",
+    })
+
+    -- Diagnostics
     vim.diagnostic.config({
       virtual_text = false,
       float = {
         source = true,
-      }
+      },
     })
   end,
 }
