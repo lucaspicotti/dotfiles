@@ -30,7 +30,6 @@ require("lazy").setup({
     { import = "plugins.util" },
     { import = "plugins.git" },
     { import = "plugins.lsp" },
-    { import = "plugins.telescope" },
     { import = "plugins.theme" },
   },
   defaults = {
