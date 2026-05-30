@@ -8,9 +8,9 @@ font-family-bold-italic = "JetBrainsMono NFM Bold Italic"
 
 font-size = 14
 
-# ========================
-# JANELA / ESPAÇAMENTO
-# ========================
+theme = "dracula-alucard"
+window-theme = light
+
 window-padding-x = 5
 window-padding-y = 5
 window-padding-balance = true
@@ -19,37 +19,13 @@ window-padding-color = background
 window-width = 140
 window-height = 40
 
-# ========================
-# CURSOR / SELEÇÃO
-# ========================
-cursor-style-blink = false
-cursor-color = #f2d5cf
 
-selection-background = #626880
-selection-foreground = #c6d0f5
+background-opacity = 1.0
 
-# ========================
-# TEMA: CATPPUCCIN FRAPPÉ
-# ========================
-background = #303446
-foreground = #c6d0f5
+# =========================
+# Optional
+# =========================
 
-palette = 0=#51576d
-palette = 1=#e78284
-palette = 2=#a6d189
-palette = 3=#e5c890
-palette = 4=#8caaee
-palette = 5=#f4b8e4
-palette = 6=#81c8be
-palette = 7=#b5bfe2
-palette = 8=#626880
-palette = 9=#e78284
-palette = 10=#a6d189
-palette = 11=#e5c890
-palette = 12=#8caaee
-palette = 13=#f4b8e4
-palette = 14=#81c8be
-palette = 15=#a5adce
-
-# Tema da janela (escuro)
-window-theme = dark
+shell-integration = fish
+copy-on-select = true
+confirm-close-surface = false

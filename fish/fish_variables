@@ -1,61 +1,65 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export BAT_STYLE:numbers\x2cchanges\x2cheader
-SETUVAR --export BAT_THEME:Catppuccin\x20Frappe
+SETUVAR --export BAT_THEME:Dracula\x20Alucard
 SETUVAR --export FZF_ALT_C_COMMAND:fd\x20\x2d\x2dtype\x20d\x20\x2d\x2dhidden\x20\x2d\x2dexclude\x20\x2egit
 SETUVAR --export FZF_CTRL_T_COMMAND:fd\x20\x2d\x2dtype\x20f\x20\x2d\x2dhidden\x20\x2d\x2dexclude\x20\x2egit
 SETUVAR --export FZF_DEFAULT_COMMAND:fd\x20\x2d\x2dtype\x20f\x20\x2d\x2dhidden\x20\x2d\x2dexclude\x20\x2egit
-SETUVAR --export FZF_DEFAULT_OPTS:\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dheight\x2040\x25\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dlayout\x3dreverse\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dborder\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dinfo\x3dinline\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dprompt\x3d\x27\u276f\x20\x27\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dpointer\x3d\x27\u25b6\x27\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dmarker\x3d\x27\u2713\x27\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dcolor\x3dbg\x3a\x23303446\x2cfg\x3a\x23c6d0f5\x2chl\x3a\x238caaee\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dcolor\x3dbg\x2b\x3a\x23414559\x2cfg\x2b\x3a\x23c6d0f5\x2chl\x2b\x3a\x238caaee\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dcolor\x3dinfo\x3a\x23ca9ee6\x2cprompt\x3a\x23f2d5cf\x2cpointer\x3a\x23f2d5cf\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dcolor\x3dmarker\x3a\x23a6d189\x2cspinner\x3a\x23f2d5cf\x2cheader\x3a\x23f2d5cf
+SETUVAR --export FZF_DEFAULT_OPTS:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dheight\x3d40\x25\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dlayout\x3dreverse\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dborder\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dinfo\x3dinline\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dprompt\x3d\x27\u276f\x20\x27\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dpointer\x3d\x27\u25b6\x27\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dmarker\x3d\x27\u2713\x27\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dcolor\x3dbg\x2b\x3a\x23cfcfde\x2cspinner\x3a\x23a34d14\x2chl\x3a\x23cb3a2a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dcolor\x3dfg\x3a\x231f1f1f\x2cheader\x3a\x23cb3a2a\x2cinfo\x3a\x23644ac9\x2cpointer\x3a\x23a3144d\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dcolor\x3dmarker\x3a\x2314710a\x2cfg\x2b\x3a\x231f1f1f\x2cprompt\x3a\x23644ac9\x2chl\x2b\x3a\x23cb3a2a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dcolor\x3dborder\x3a\x236c664b\x2clabel\x3a\x231f1f1f\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dheight\x3d100\x25\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dlayout\x3dreverse\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dborder\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2d\x2dpreview\x3d\x27if\x20\x5b\x20\x2dd\x20\x7b\x7d\x20\x5d\x3b\x20then\x20if\x20command\x20\x2dv\x20eza\x20\x3e/dev/null\x202\x3e\x261\x3b\x20then\x20eza\x20\x2d\x2dtree\x20\x2d\x2dlevel\x3d2\x20\x7b\x7d\x3b\x20else\x20ls\x20\x2dF\x20\x7b\x7d\x3b\x20fi\x3b\x20elif\x20\x5b\x20\x2df\x20\x7b\x7d\x20\x5d\x3b\x20then\x20bat\x20\x2d\x2dcolor\x3dalways\x20\x2d\x2dline\x2drange\x20\x3a200\x20\x7b\x7d\x3b\x20fi\x27
 SETUVAR __fish_initialized:3400
 SETUVAR _fisher_catppuccin_2F_fish_files:\x7e/\x2econfig/fish/themes/catppuccin\x2dfrappe\x2etheme\x1e\x7e/\x2econfig/fish/themes/catppuccin\x2dmacchiato\x2etheme\x1e\x7e/\x2econfig/fish/themes/catppuccin\x2dmocha\x2etheme\x1e\x7e/\x2econfig/fish/themes/static
+SETUVAR _fisher_dracula_2F_fish_files:\x7e/\x2econfig/fish/themes/Dracula\x20Official\x2etheme\x1e\x7e/\x2econfig/fish/conf\x2ed/dracula\x2efish
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fisher\x2efish\x1e\x7e/\x2econfig/fish/completions/fisher\x2efish
 SETUVAR _fisher_jorgebucaran_2F_hydro_files:\x7e/\x2econfig/fish/functions/fish_mode_prompt\x2efish\x1e\x7e/\x2econfig/fish/functions/fish_prompt\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/hydro\x2efish
 SETUVAR _fisher_jorgebucaran_2F_nvm_2E_fish_files:\x7e/\x2econfig/fish/functions/_nvm_index_update\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_list\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_version_activate\x2efish\x1e\x7e/\x2econfig/fish/functions/_nvm_version_deactivate\x2efish\x1e\x7e/\x2econfig/fish/functions/nvm\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/nvm\x2efish\x1e\x7e/\x2econfig/fish/completions/nvm\x2efish
 SETUVAR _fisher_meaningful_2D_ooo_2F_sponge_files:\x7e/\x2econfig/fish/functions/_sponge_clear_state\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_on_exit\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_on_postexec\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_on_preexec\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_on_prompt\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_remove_from_history\x2efish\x1e\x7e/\x2econfig/fish/functions/sponge_filter_failed\x2efish\x1e\x7e/\x2econfig/fish/functions/sponge_filter_matched\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/sponge\x2efish
-SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejorgebucaran/nvm\x2efish\x1emeaningful\x2dooo/sponge\x1ejorgebucaran/hydro\x1ecatppuccin/fish
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejorgebucaran/nvm\x2efish\x1emeaningful\x2dooo/sponge\x1ejorgebucaran/hydro\x1ecatppuccin/fish\x1edracula/fish
 SETUVAR _fisher_upgraded_to_4_4:\x1d
+SETUVAR _hydro_git_19819:main\u2022\x20
+SETUVAR _hydro_git_23233:main\u2022\x20
 SETUVAR _hydro_git_3925:main\u2022\x20
-SETUVAR _hydro_git_9965:main\x20
-SETUVAR fish_color_autosuggestion:4c566a
-SETUVAR fish_color_cancel:\x2d\x2dreverse
-SETUVAR fish_color_command:88c0d0
-SETUVAR fish_color_comment:4c566a\x1e\x2d\x2ditalics
-SETUVAR fish_color_cwd:5e81ac
-SETUVAR fish_color_cwd_root:bf616a
-SETUVAR fish_color_end:81a1c1
-SETUVAR fish_color_error:bf616a
-SETUVAR fish_color_escape:ebcb8b
-SETUVAR fish_color_history_current:e5e9f0\x1e\x2d\x2dbold
-SETUVAR fish_color_host:a3be8c
-SETUVAR fish_color_host_remote:\x1d
-SETUVAR fish_color_keyword:\x1d
+SETUVAR fish_color_autosuggestion:6c664b
+SETUVAR fish_color_cancel:cb3a2a\x1e\x2d\x2dreverse
+SETUVAR fish_color_command:036a96
+SETUVAR fish_color_comment:6c664b
+SETUVAR fish_color_cwd:14710a
+SETUVAR fish_color_cwd_root:cb3a2a
+SETUVAR fish_color_end:a34d14
+SETUVAR fish_color_error:cb3a2a
+SETUVAR fish_color_escape:a3144d
+SETUVAR fish_color_gray:9ca0b0
+SETUVAR fish_color_history_current:\x2d\x2dbold
+SETUVAR fish_color_host:644ac9
+SETUVAR fish_color_host_remote:644ac9
+SETUVAR fish_color_keyword:a3144d
 SETUVAR fish_color_match:\x2d\x2dbackground\x3dbrblue
-SETUVAR fish_color_normal:normal
-SETUVAR fish_color_operator:81a1c1
-SETUVAR fish_color_option:\x1d
-SETUVAR fish_color_param:d8dee9
-SETUVAR fish_color_quote:a3be8c
-SETUVAR fish_color_redirection:b48ead\x1e\x2d\x2dbold
-SETUVAR fish_color_search_match:\x2d\x2dbold\x1e\x2d\x2dbackground\x3d434c5e
-SETUVAR fish_color_selection:d8dee9\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3d434c5e
-SETUVAR fish_color_status:red
-SETUVAR fish_color_user:a3be8c
+SETUVAR fish_color_normal:1f1f1f
+SETUVAR fish_color_operator:14710a
+SETUVAR fish_color_option:a34d14
+SETUVAR fish_color_param:644ac9
+SETUVAR fish_color_quote:846e15
+SETUVAR fish_color_redirection:1f1f1f
+SETUVAR fish_color_search_match:\x2d\x2dbackground\x3dcfcfde
+SETUVAR fish_color_selection:\x2d\x2dbackground\x3dcfcfde
+SETUVAR fish_color_status:cb3a2a
+SETUVAR fish_color_user:036a96
 SETUVAR fish_color_valid_path:\x2d\x2dunderline
 SETUVAR fish_key_bindings:fish_default_key_bindings
 SETUVAR fish_pager_color_background:\x1d
-SETUVAR fish_pager_color_completion:e5e9f0
-SETUVAR fish_pager_color_description:ebcb8b\x1e\x2d\x2ditalics
-SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
-SETUVAR fish_pager_color_progress:3b4252\x1e\x2d\x2dbackground\x3dd08770
+SETUVAR fish_pager_color_completion:1f1f1f
+SETUVAR fish_pager_color_description:6c664b
+SETUVAR fish_pager_color_prefix:036a96
+SETUVAR fish_pager_color_progress:6c664b
 SETUVAR fish_pager_color_secondary_background:\x1d
-SETUVAR fish_pager_color_secondary_completion:\x1d
-SETUVAR fish_pager_color_secondary_description:\x1d
-SETUVAR fish_pager_color_secondary_prefix:\x1d
-SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3d434c5e
-SETUVAR fish_pager_color_selected_completion:\x1d
-SETUVAR fish_pager_color_selected_description:\x1d
-SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR --export fish_user_paths:/usr/local/bin\x1e/home/lucaspicotti/\x2elocal/bin
+SETUVAR fish_pager_color_secondary_completion:1f1f1f
+SETUVAR fish_pager_color_secondary_description:6c664b
+SETUVAR fish_pager_color_secondary_prefix:036a96
+SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3dcfcfde
+SETUVAR fish_pager_color_selected_completion:1f1f1f
+SETUVAR fish_pager_color_selected_description:6c664b
+SETUVAR fish_pager_color_selected_prefix:036a96
+SETUVAR --export fish_user_paths:/home/lucaspicotti/go/bin\x1e/usr/local/go/bin\x1e/usr/local/bin\x1e/home/lucaspicotti/\x2elocal/bin
+SETUVAR --export nvm_default_version:25
 SETUVAR sponge_allow_previously_successful:true
 SETUVAR sponge_delay:2
 SETUVAR sponge_filters:sponge_filter_failed\x1esponge_filter_matched

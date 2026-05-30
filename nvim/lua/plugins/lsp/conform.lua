@@ -16,13 +16,10 @@ return {
       markdown = { "prettierd" },
       ["markdown.mdx"] = { "prettierd" },
 
+      go = { "goimports" },
+
       -- PHP (formatter)
       php = { "phpcbf" },
-    },
-
-    format_on_save = {
-      timeout_ms = 1000,
-      lsp_format = "fallback",
     },
   },
 }

@@ -65,6 +65,11 @@ main() {
     link_path "$DOTFILES/kitty" "$CONFIG_DIR/kitty"
   fi
 
+  # ghostty
+  if [ -d "$DOTFILES/ghostty" ]; then
+    link_path "$DOTFILES/ghostty" "$CONFIG_DIR/ghostty"
+  fi
+
   # tmux
   if [ -f "$DOTFILES/tmux/tmux.conf" ]; then
     link_path "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"

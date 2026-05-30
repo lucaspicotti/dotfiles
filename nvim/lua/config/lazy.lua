@@ -36,9 +36,6 @@ require("lazy").setup({
     lazy = false,
     version = false,
   },
-  install = {
-    colorscheme = { "catppuccin", "habamax" },
-  },
   checker = {
     enabled = true,
     notify = false,
