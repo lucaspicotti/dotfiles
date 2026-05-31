@@ -84,11 +84,16 @@ return {
       },
 
       mapping = {
-        ["<C-l>"] = cmp.mapping(function()
+        ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.confirm({ select = true })
           else
-            cmp.complete()
+            local ok, copilot_suggestion = pcall(require, "copilot.suggestion")
+            if ok and copilot_suggestion.is_visible() then
+              copilot_suggestion.accept()
+            else
+              fallback()
+            end
           end
         end, { "i", "s" }),
 

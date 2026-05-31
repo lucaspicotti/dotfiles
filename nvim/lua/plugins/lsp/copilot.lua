@@ -2,6 +2,24 @@ return {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
   event = "InsertEnter",
+  keys = {
+    {
+      "<leader>ct",
+      function()
+        require("copilot.suggestion").toggle_auto_trigger()
+        local is_auto = vim.b.copilot_suggestion_auto_trigger
+        if is_auto == nil then
+          is_auto = require("copilot.config").get("suggestion").auto_trigger
+        end
+        if is_auto then
+          vim.notify("Copilot Auto-Trigger: LIGADO (Ativo)", vim.log.levels.INFO, { title = "Copilot" })
+        else
+          vim.notify("Copilot Auto-Trigger: DESLIGADO (Manual)", vim.log.levels.INFO, { title = "Copilot" })
+        end
+      end,
+      desc = "Toggle Copilot Auto Trigger",
+    },
+  },
   config = function()
     require("copilot").setup({
       panel = {
@@ -10,12 +28,12 @@ return {
 
       suggestion = {
         enabled = true,
-        auto_trigger = true,
+        auto_trigger = false,
         hide_during_completion = true,
         debounce = 75,
         trigger_on_accept = false,
         keymap = {
-          accept = "<C-l>",
+          accept = false,
           accept_word = false,
           accept_line = false,
           next = "<M-]>",

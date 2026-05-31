@@ -68,7 +68,7 @@ return {
   opts = {
     options = {
       icons_enabled = true,
-      theme = "auto",
+      theme = "catppuccin-mocha",
       disabled_filetypes = {
         statusline = { "alpha" },
       },

@@ -1,11 +1,12 @@
 if status is-interactive
     fish_add_path ~/.local/bin
     fish_add_path ~/go/bin
+    fish_add_path ~/.config/composer/vendor/bin
 
     abbr -a vim nvim
 
-    # Theme configurations (Dracula Alucard)
-    set -gx BAT_THEME "Dracula Alucard"
+    # Theme configurations (Catppuccin Mocha)
+    set -gx BAT_THEME "Catppuccin Mocha"
     
     set -gx FZF_DEFAULT_OPTS " \
         --height=100% \
@@ -15,10 +16,10 @@ if status is-interactive
         --prompt='❯ ' \
         --pointer='▶' \
         --marker='✓' \
-        --color=bg+:#cfcfde,spinner:#a34d14,hl:#cb3a2a \
-        --color=fg:#1f1f1f,header:#cb3a2a,info:#644ac9,pointer:#a3144d \
-        --color=marker:#14710a,fg+:#1f1f1f,prompt:#644ac9,hl+:#cb3a2a \
-        --color=border:#6c664b,label:#1f1f1f \
+        --color=bg+:#313244,spinner:#f5e0dc,hl:#f38ba8 \
+        --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+        --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+        --color=border:#89b4fa,label:#cdd6f4 \
         --preview='if [ -d {} ]; then if command -v eza >/dev/null 2>&1; then eza --tree --level=2 {}; else ls -F {}; fi; elif [ -f {} ]; then if command -v bat >/dev/null 2>&1; then bat --color=always --line-range :200 {}; elif command -v batcat >/dev/null 2>&1; then batcat --color=always --line-range :200 {}; else cat {}; fi; fi'"
     set -g hydro_color_pwd $fish_color_cwd
     set -g hydro_color_git $fish_color_quote

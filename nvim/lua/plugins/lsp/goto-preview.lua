@@ -1,27 +1,25 @@
 return {
   "rmagatti/goto-preview",
-  lazy = true,
+  keys = {
+    { "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", desc = "Preview Definition" },
+    { "gpt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", desc = "Preview Type Definition" },
+    { "gpi", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", desc = "Preview Implementation" },
+    { "gD", "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>", desc = "Preview Declaration" },
+    { "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", desc = "Close All Previews" },
+    { "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", desc = "Preview References" },
+  },
   opts = {
     -- focus_on_open = false,
     -- dismiss_on_move = true,
     border = { "↖", "─", "╮", "│", "╯", "─", "╰", "│" },
-    post_open_hook = function()
-      -- remap gr to close the preview window
-      vim.api.nvim_buf_set_keymap(0, "n", "gd", ":close<CR>", { noremap = true, silent = true })
-      vim.api.nvim_buf_set_keymap(0, "n", "gD", ":close<CR>", { noremap = true, silent = true })
-      vim.api.nvim_buf_set_keymap(0, "n", "gr", ":close<CR>", { noremap = true, silent = true })
-      vim.api.nvim_buf_set_keymap(0, "n", "gi", ":close<CR>", { noremap = true, silent = true })
-      vim.api.nvim_buf_set_keymap(0, "n", "gt", ":close<CR>", { noremap = true, silent = true })
-      vim.api.nvim_buf_set_keymap(0, "n", "q", ":close<CR>", { noremap = true, silent = true })
-    end,
-    post_close_hook = function()
-      -- unmap gr when the preview window is closed
-      vim.keymap.del("n", "gd")
-      vim.keymap.del("n", "gD")
-      vim.keymap.del("n", "gr")
-      vim.keymap.del("n", "gi")
-      vim.keymap.del("n", "gt")
-      vim.keymap.del("n", "q")
+    post_open_hook = function(buf, win)
+      -- remap inside the preview window to close it
+      vim.api.nvim_buf_set_keymap(buf, "n", "gd", ":close<CR>", { noremap = true, silent = true })
+      vim.api.nvim_buf_set_keymap(buf, "n", "gD", ":close<CR>", { noremap = true, silent = true })
+      vim.api.nvim_buf_set_keymap(buf, "n", "gr", ":close<CR>", { noremap = true, silent = true })
+      vim.api.nvim_buf_set_keymap(buf, "n", "gi", ":close<CR>", { noremap = true, silent = true })
+      vim.api.nvim_buf_set_keymap(buf, "n", "gt", ":close<CR>", { noremap = true, silent = true })
+      vim.api.nvim_buf_set_keymap(buf, "n", "q", ":close<CR>", { noremap = true, silent = true })
     end,
   },
 }
