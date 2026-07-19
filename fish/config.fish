@@ -5,8 +5,8 @@ if status is-interactive
 
     abbr -a vim nvim
 
-    # Theme configurations (Catppuccin Mocha)
-    set -gx BAT_THEME "Catppuccin Mocha"
+    # Theme configurations (Everforest Dark)
+    set -gx BAT_THEME "gruvbox-dark"
     
     set -gx FZF_DEFAULT_OPTS " \
         --height=100% \
@@ -16,10 +16,10 @@ if status is-interactive
         --prompt='❯ ' \
         --pointer='▶' \
         --marker='✓' \
-        --color=bg+:#313244,spinner:#f5e0dc,hl:#f38ba8 \
-        --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-        --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
-        --color=border:#89b4fa,label:#cdd6f4 \
+        --color=bg+:#343f44,spinner:#a7c080,hl:#e67e80 \
+        --color=fg:#d3c6aa,header:#e67e80,info:#83c092,pointer:#83c092 \
+        --color=marker:#dbbc7f,fg+:#d3c6aa,prompt:#a7c080,hl+:#e67e80 \
+        --color=border:#3d484d,label:#d3c6aa \
         --preview='if [ -d {} ]; then if command -v eza >/dev/null 2>&1; then eza --tree --level=2 {}; else ls -F {}; fi; elif [ -f {} ]; then if command -v bat >/dev/null 2>&1; then bat --color=always --line-range :200 {}; elif command -v batcat >/dev/null 2>&1; then batcat --color=always --line-range :200 {}; else cat {}; fi; fi'"
     set -g hydro_color_pwd $fish_color_cwd
     set -g hydro_color_git $fish_color_quote

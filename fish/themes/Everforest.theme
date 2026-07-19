@@ -1,0 +1,89 @@
+# name: 'Everforest'
+# url: 'https://everforest.github.io/'
+
+[light]
+# preferred_background: fdf6e3
+fish_color_normal 5c6a72
+fish_color_command 8da101
+fish_color_param 5c6a72
+fish_color_keyword f85552
+fish_color_quote dfa000
+fish_color_redirection df69ba
+fish_color_end f57d26
+fish_color_comment 939f91
+fish_color_error f85552
+fish_color_gray 939f91
+fish_color_selection --background=efead4
+fish_color_search_match --background=efead4
+fish_color_option 8da101
+fish_color_operator 35a77c
+fish_color_escape df69ba
+fish_color_autosuggestion 939f91
+fish_color_cancel f85552
+fish_color_cwd 3a94c5
+fish_color_user 35a77c
+fish_color_host 3a94c5
+fish_color_host_remote 8da101
+fish_color_status f85552
+fish_pager_color_progress 939f91
+fish_pager_color_prefix 35a77c
+fish_pager_color_completion 5c6a72
+fish_pager_color_description 939f91
+
+[dark]
+# preferred_background: 2d353b
+fish_color_normal d3c6aa
+fish_color_command a7c080
+fish_color_param d3c6aa
+fish_color_keyword e67e80
+fish_color_quote dbbc7f
+fish_color_redirection d699b6
+fish_color_end e69875
+fish_color_comment 859289
+fish_color_error e67e80
+fish_color_gray 859289
+fish_color_selection --background=3d484d
+fish_color_search_match --background=3d484d
+fish_color_option a7c080
+fish_color_operator 83c092
+fish_color_escape d699b6
+fish_color_autosuggestion 859289
+fish_color_cancel e67e80
+fish_color_cwd 7fbbb3
+fish_color_user 83c092
+fish_color_host 7fbbb3
+fish_color_host_remote a7c080
+fish_color_status e67e80
+fish_pager_color_progress 859289
+fish_pager_color_prefix 83c092
+fish_pager_color_completion d3c6aa
+fish_pager_color_description 859289
+
+[unknown]
+# preferred_background: 2d353b
+fish_color_normal d3c6aa
+fish_color_command a7c080
+fish_color_param d3c6aa
+fish_color_keyword e67e80
+fish_color_quote dbbc7f
+fish_color_redirection d699b6
+fish_color_end e69875
+fish_color_comment 859289
+fish_color_error e67e80
+fish_color_gray 859289
+fish_color_selection --background=3d484d
+fish_color_search_match --background=3d484d
+fish_color_option a7c080
+fish_color_operator 83c092
+fish_color_escape d699b6
+fish_color_autosuggestion 859289
+fish_color_cancel e67e80
+fish_color_cwd 7fbbb3
+fish_color_user 83c092
+fish_color_host 7fbbb3
+fish_color_host_remote a7c080
+fish_color_status e67e80
+fish_pager_color_progress 859289
+fish_pager_color_prefix 83c092
+fish_pager_color_completion d3c6aa
+fish_pager_color_description 859289
