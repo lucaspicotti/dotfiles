@@ -29,3 +29,25 @@ background-opacity = 1.0
 shell-integration = fish
 copy-on-select = true
 confirm-close-surface = false
+
+# =========================
+# Navegação entre Splits
+# =========================
+keybind = ctrl+shift+left=unbind
+keybind = ctrl+shift+right=unbind
+keybind = ctrl+shift+up=goto_split:up
+keybind = ctrl+shift+down=goto_split:down
+keybind = ctrl+shift+left=goto_split:left
+keybind = ctrl+shift+right=goto_split:right
+
+keybind = ctrl+shift+k=goto_split:up
+keybind = ctrl+shift+j=goto_split:down
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+l=goto_split:right
+# =========================
+# Redimensionamento de Splits
+# =========================
+keybind = alt+shift+up=resize_split:up,10
+keybind = alt+shift+down=resize_split:down,10
+keybind = alt+shift+left=resize_split:left,10
+keybind = alt+shift+right=resize_split:right,10
