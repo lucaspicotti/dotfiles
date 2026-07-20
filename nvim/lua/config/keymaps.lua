@@ -50,6 +50,6 @@ vim.keymap.set("v", "<A-j>", ":move '>+1<CR>gv=gv")
 vim.keymap.set("v", "<A-k>", ":move '<-2<CR>gv=gv")
 
 -- Abrir terminal --
-vim.keymap.set("n", "<leader>t", function()
+vim.keymap.set("n", "<leader>T", function()
   require("snacks").terminal()
 end, { desc = "Toggle Terminal" })

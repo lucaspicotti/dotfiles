@@ -1,6 +1,9 @@
 return {
   "stevearc/oil.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
+  keys = {
+    { "-", "<CMD>Oil<CR>", desc = "Open parent directory" },
+  },
   opts = {
     columns = { "icon" },
     delete_to_trash = true,
@@ -11,9 +14,6 @@ return {
         { "name", "asc" },
       },
     },
-    -- TODO: Talvez alterar o modo do keys
-    keys = {
-      { "-", ":Oil<CR>", desc = "Open parent directory" },
-    },
   },
 }
+
