@@ -4,6 +4,7 @@ if status is-interactive
     fish_add_path ~/.config/composer/vendor/bin
 
     abbr -a vim nvim
+    abbr -a phpunit "/home/lucaspicotti/phpunit-9.phar"
 
     # Theme configurations (Everforest Dark)
     set -gx BAT_THEME "gruvbox-dark"
