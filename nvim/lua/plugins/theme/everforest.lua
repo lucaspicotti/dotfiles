@@ -5,7 +5,7 @@ return {
     priority = 1000,
     config = function()
       require("everforest").setup({
-        background = "hard", -- hard, medium, soft
+        background = "medium", -- hard, medium, soft
         ui = {
           italic = true,
         },
