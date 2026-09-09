@@ -1,8 +1,7 @@
 ---
-
 name: split-commits-by-diff
 description: Divide commits do Git por trechos do diff para criar alterações limpas e bem delimitadas.
-------------------------------------------------------------------------------------------------------
+---
 
 # Dividir Commits por Diff
 
@@ -11,7 +10,7 @@ Use esta skill para transformar uma árvore de trabalho com alterações mistura
 ## Resultados Esperados
 
 * Produzir um plano de commits antes de alterar o index.
-* Manter cada commit focado em uma única intenção (`feature`, `fix`, `refactor`, `docs`, `test` ou `chore`).
+* Manter cada commit focado em uma única intenção (`feat`, `fix`, `refactor`, `perf`, `test`, `docs`, `style`, `chore`, `build`, `ci` ou `revert`).
 * Preservar as alterações do usuário, evitando adicionar arquivos ou trechos por engano.
 * Criar mensagens de commit claras, explicando por que cada commit existe.
 
@@ -76,18 +75,69 @@ Se a seleção interativa de trechos não estiver disponível no ambiente de exe
 
 Crie o commit com uma mensagem curta e alinhada ao padrão do repositório.
 
-Diretrizes para a mensagem:
+#### Formato do título do commit
 
-* Primeira linha: resumo curto no modo imperativo.
-* Corpo opcional: uma ou duas linhas explicando o motivo da alteração.
-* Utilize prefixos semânticos somente se o repositório já seguir esse padrão.
-* Sempre escreva o resumo em português
+Quando o repositório utilizar Conventional Commits, siga este formato:
+
+```text
+<tipo>(<escopo>): <resumo em português>
+```
+
+O escopo é opcional. Quando não houver um escopo claro, utilize:
+
+```text
+<tipo>: <resumo em português>
+```
+
+Tipos permitidos:
+
+* `feat`: nova funcionalidade ou capacidade do sistema.
+* `fix`: correção de bug ou comportamento incorreto.
+* `refactor`: alteração interna de código sem corrigir bug nem adicionar funcionalidade.
+* `perf`: melhoria de performance.
+* `test`: criação, alteração ou correção de testes.
+* `docs`: documentação.
+* `style`: formatação, lint, espaçamento ou padronização sem mudança de lógica.
+* `chore`: manutenção geral, configuração ou tarefas auxiliares que não alteram diretamente a funcionalidade.
+* `build`: alterações em dependências, empacotamento ou processo de build.
+* `ci`: alterações em pipelines, workflows ou configuração de integração contínua.
+* `revert`: reversão de uma alteração anterior.
+
+Regras para o título:
+
+* Sempre escreva o resumo em português.
+* Use o modo imperativo no resumo.
+* Mantenha o título curto, específico e focado em uma única intenção.
+* Não finalize o título com ponto.
+* Use escopo quando ele ajudar a identificar claramente o módulo, domínio ou componente afetado.
+* Não use um tipo genérico se houver um tipo mais específico que represente melhor a alteração.
+* Preserve o padrão existente do repositório caso ele já utilize uma convenção compatível, ajustando apenas o necessário.
 
 Exemplos:
 
+* `feat(relatorios): adiciona filtro por período`
 * `fix(auth): evita gravações duplicadas do refresh token`
 * `refactor(blog): extrai helper de normalização de locale`
-* `docs: esclarece fluxo de invalidação do cache`
+* `perf(database): reduz consultas duplicadas`
+* `test(pagamento): adiciona testes de cancelamento`
+* `docs(api): documenta endpoint de NFC-e`
+* `style: ajusta formatação conforme PSR-12`
+* `chore(composer): atualiza configuração do projeto`
+* `build: atualiza dependências do Composer`
+* `ci: adiciona etapa de testes ao pipeline`
+* `revert: reverte alteração no checkout`
+
+Se o repositório não utilizar prefixos semânticos, preserve o padrão já adotado no histórico. Ainda assim, mantenha o resumo curto, imperativo e em português.
+
+#### Corpo da mensagem
+
+O corpo é opcional e deve ser usado apenas quando ajudar a explicar o motivo da alteração.
+
+Diretrizes:
+
+* Primeira linha: título seguindo o formato definido acima.
+* Corpo opcional: uma ou duas linhas explicando o motivo da alteração, contexto relevante ou consequência técnica.
+* Evite repetir no corpo exatamente o que já está evidente no título.
 
 ### 5) Validar e continuar
 
@@ -136,4 +186,3 @@ Quando esta skill for utilizada, comunique-se nesta sequência:
 4. Informe a lista final de commits e o estado restante do repositório.
 
 Seja objetivo e tome decisões. Solicite a opinião do usuário apenas quando existirem múltiplas estratégias de divisão igualmente válidas e que possam alterar significativamente o histórico.
-

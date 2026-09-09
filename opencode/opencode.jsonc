@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "/home/lucaspicotti/dotfiles/ai-context/AGENTS.md"
+  ],
+  "skills": {
+    "paths": [
+      "/home/lucaspicotti/dotfiles/ai-context/skills"
+    ]
+  }
+}

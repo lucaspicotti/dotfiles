@@ -71,6 +71,7 @@ Identifique:
 * Placeholders que precisam ser preenchidos.
 * Comentários de instrução que devem ser removidos.
 * Seções opcionais que podem permanecer vazias ou ser removidas.
+* Perguntar o nome da tarefa e o link para preencher a sessão 1 do template
 
 ### 2) Inspecionar o contexto da branch
 
