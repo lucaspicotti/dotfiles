@@ -142,6 +142,11 @@ main() {
     chmod +x "$BIN_DIR/t"
   fi
 
+  # opencode
+  if [ -f "$DOTFILES/opencode/opencode.jsonc" ]; then
+    link_path "$DOTFILES/opencode/opencode.jsonc" "$CONFIG_DIR/opencode/opencode.jsonc"
+  fi
+
   # 4. Bootstrap/Instalação de plugins do LazyVim (Neovim)
   log "Instalando/Sincronizando plugins do LazyVim..."
   if command -v nvim >/dev/null 2>&1; then
