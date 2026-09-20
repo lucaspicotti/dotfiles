@@ -20,6 +20,7 @@ SETUVAR _hydro_git_104085:223417\x2dBugImportarProdutosXML\u2022\x20
 SETUVAR _hydro_git_10444:174935\x2dCobrancaViaWhatsapp\u2022\x20
 SETUVAR _hydro_git_104664:masterErp\u2022\x20
 SETUVAR _hydro_git_105068:migrarConfigComponentes\x20
+SETUVAR _hydro_git_105515:main\u2022\x20
 SETUVAR _hydro_git_10581:211889\x2dAddGrupoClientes\u2022\x20
 SETUVAR _hydro_git_106592:correcaoComponentesUi\u2022\x20
 SETUVAR _hydro_git_10696:226807\x2dListaEstoques\u2022\x20
@@ -28,6 +29,7 @@ SETUVAR _hydro_git_108398:226807\x2dListaEstoques\u2022\x20
 SETUVAR _hydro_git_108442:correcaoComponentesUi\u2022\x20
 SETUVAR _hydro_git_110194:208821\x2dLuminaMenuLateral\u2022\x20
 SETUVAR _hydro_git_111274:correcaoComponentesUi\u2022\x20
+SETUVAR _hydro_git_111756:main\u2022\x20
 SETUVAR _hydro_git_112131:226531\x2dBaixaReconsultaNFe\u2022\x20
 SETUVAR _hydro_git_11241:\x23216719\x2dRefatorarEstoquev2\u2022\x20
 SETUVAR _hydro_git_11312:inclusaoComandosCli\u2022\x20
@@ -39,8 +41,10 @@ SETUVAR _hydro_git_118291:226531\x2dBaixaReconsultaNFe\u2022\x20
 SETUVAR _hydro_git_119189:223417\x2dBugImportarProdutosXML\x20
 SETUVAR _hydro_git_119707:226531\x2dBaixaReconsultaNFe\u2022\x20
 SETUVAR _hydro_git_12159:174935\x2dCobrancaViaWhatsapp\u2022\x20
+SETUVAR _hydro_git_123013:main\u2022\x20
 SETUVAR _hydro_git_12304:main\u2022\x20
 SETUVAR _hydro_git_12342:masterVendTEF\u2022\x20
+SETUVAR _hydro_git_128523:main\u2022\x20
 SETUVAR _hydro_git_12962:main\u2022\x20
 SETUVAR _hydro_git_14211:main\u2022\x20
 SETUVAR _hydro_git_15443:main\u2022\x20
@@ -201,6 +205,7 @@ SETUVAR _hydro_git_68140:208821\x2dLuminaHeaderMenu\u2022\x20
 SETUVAR _hydro_git_68450:222989\x2dAtualizacaoResumoTerminal\u2022\x20
 SETUVAR _hydro_git_68664:208821\x2dLuminaHeaderMenu\u2022\x20
 SETUVAR _hydro_git_68689:211889\x2dGruposMigracao\u2022\x20
+SETUVAR _hydro_git_69048:main\u2022\x20
 SETUVAR _hydro_git_69139:224589\x2dMigracaoApiConsultaCpf\u2022\x20
 SETUVAR _hydro_git_69305:224589\x2dMigracaoApiConsultaCpf\u2022\x20
 SETUVAR _hydro_git_69492:migrarConfigComponentes\x20
@@ -224,6 +229,7 @@ SETUVAR _hydro_git_72837:208833\x2dConfigOcultarSaldoVendTef\u2022\x20
 SETUVAR _hydro_git_73330:222959\x2dAutomacaoCargaFTP\u2022\x20
 SETUVAR _hydro_git_74060:211889\x2dAddGrupoClientes\x20
 SETUVAR _hydro_git_7415:master\u2022\x20
+SETUVAR _hydro_git_86718:main\u2022\x20
 SETUVAR fish_color_autosuggestion:859289
 SETUVAR fish_color_cancel:e67e80
 SETUVAR fish_color_command:a7c080
