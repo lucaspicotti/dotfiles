@@ -1,28 +1,28 @@
 gui:
   nerdFontsVersion: "3"
   theme:
-    # Catppuccin Latte, blue accent.
+    # Duskfox (nightfox.nvim), magenta accent.
     activeBorderColor:
-      - "#1e66f5"
+      - "#c4a7e7"
       - bold
     inactiveBorderColor:
-      - "#8c8fa1"
+      - "#817c9c"
     optionsTextColor:
-      - "#1e66f5"
+      - "#65b1cd"
     selectedLineBgColor:
-      - "#ccd0da"
+      - "#433c59"
     selectedRangeBgColor:
-      - "#ccd0da"
+      - "#433c59"
     cherryPickedCommitBgColor:
-      - "#bcc0cc"
+      - "#4b4673"
     cherryPickedCommitFgColor:
-      - "#1e66f5"
+      - "#65b1cd"
     unstagedChangesColor:
-      - "#d20f39"
+      - "#eb6f92"
     defaultFgColor:
-      - "#4c4f69"
+      - "#e0def4"
     searchingActiveBorderColor:
-      - "#df8e1d"
+      - "#f6c177"
 git:
   pagers:
     - colorArg: always

@@ -163,9 +163,10 @@ main() {
     link_path "$DOTFILES/codex/config.toml" "$HOME/.codex/config.toml"
     mkdir -p "$HOME/.codex/themes"
     link_path "$DOTFILES/codex/themes/Catppuccin Latte.tmTheme" "$HOME/.codex/themes/Catppuccin Latte.tmTheme"
+    link_path "$DOTFILES/codex/themes/Duskfox.tmTheme" "$HOME/.codex/themes/Duskfox.tmTheme"
   fi
 
-  # Claude Code has no custom theme import; light mode is its closest native option.
+  # Claude Code has no custom theme import; dark mode is its closest native option.
   if [ -f "$DOTFILES/claude/settings.json" ]; then
     link_path "$DOTFILES/claude/settings.json" "$HOME/.claude/settings.json"
   fi

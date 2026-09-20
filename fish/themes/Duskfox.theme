@@ -1,0 +1,30 @@
+# name: 'Duskfox'
+# url: 'https://github.com/EdenEast/nightfox.nvim'
+
+# preferred_background: 232136
+fish_color_normal e0def4
+fish_color_command 65b1cd
+fish_color_param cdcbe0
+fish_color_keyword c4a7e7
+fish_color_quote a3be8c
+fish_color_redirection eb98c3
+fish_color_end f0a4a2
+fish_color_comment 817c9c
+fish_color_error eb6f92
+fish_color_gray 6e6a86
+fish_color_selection --background=433c59
+fish_color_search_match --background=433c59
+fish_color_option a3be8c
+fish_color_operator eb98c3
+fish_color_escape f083a2
+fish_color_autosuggestion 6e6a86
+fish_color_cancel eb6f92
+fish_color_cwd f6c177
+fish_color_user 9ccfd8
+fish_color_host 569fba
+fish_color_host_remote a3be8c
+fish_color_status eb6f92
+fish_pager_color_progress 6e6a86
+fish_pager_color_prefix eb98c3
+fish_pager_color_completion e0def4
+fish_pager_color_description 6e6a86

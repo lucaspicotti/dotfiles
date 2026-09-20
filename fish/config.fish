@@ -6,33 +6,33 @@ if status is-interactive
     abbr -a vim nvim
     abbr -a phpunit "/home/lucaspicotti/phpunit-9.phar"
 
-    # Catppuccin Latte themes
-    set -g fish_color_normal 4c4f69
-    set -g fish_color_command 1e66f5
-    set -g fish_color_param dd7878
-    set -g fish_color_keyword 8839ef
-    set -g fish_color_quote 40a02b
-    set -g fish_color_redirection ea76cb
-    set -g fish_color_end fe640b
-    set -g fish_color_comment 8c8fa1
-    set -g fish_color_error d20f39
-    set -g fish_color_selection --background=ccd0da
-    set -g fish_color_search_match --background=ccd0da
-    set -g fish_color_option 40a02b
-    set -g fish_color_operator ea76cb
-    set -g fish_color_escape e64553
-    set -g fish_color_autosuggestion 9ca0b0
-    set -g fish_color_cancel d20f39
-    set -g fish_color_cwd df8e1d
-    set -g fish_color_user 179299
-    set -g fish_color_host 1e66f5
-    set -g fish_color_host_remote 40a02b
-    set -g fish_color_status d20f39
-    set -g fish_pager_color_progress 9ca0b0
-    set -g fish_pager_color_prefix ea76cb
-    set -g fish_pager_color_completion 4c4f69
-    set -g fish_pager_color_description 9ca0b0
-    set -gx BAT_THEME "Catppuccin Latte"
+    # Duskfox (nightfox.nvim) theme
+    set -g fish_color_normal e0def4
+    set -g fish_color_command 65b1cd
+    set -g fish_color_param cdcbe0
+    set -g fish_color_keyword c4a7e7
+    set -g fish_color_quote a3be8c
+    set -g fish_color_redirection eb98c3
+    set -g fish_color_end f0a4a2
+    set -g fish_color_comment 817c9c
+    set -g fish_color_error eb6f92
+    set -g fish_color_selection --background=433c59
+    set -g fish_color_search_match --background=433c59
+    set -g fish_color_option a3be8c
+    set -g fish_color_operator eb98c3
+    set -g fish_color_escape f083a2
+    set -g fish_color_autosuggestion 6e6a86
+    set -g fish_color_cancel eb6f92
+    set -g fish_color_cwd f6c177
+    set -g fish_color_user 9ccfd8
+    set -g fish_color_host 569fba
+    set -g fish_color_host_remote a3be8c
+    set -g fish_color_status eb6f92
+    set -g fish_pager_color_progress 6e6a86
+    set -g fish_pager_color_prefix eb98c3
+    set -g fish_pager_color_completion e0def4
+    set -g fish_pager_color_description 6e6a86
+    set -gx BAT_THEME "Duskfox"
 
     set -gx FZF_DEFAULT_OPTS " \
         --height=100% \
@@ -42,10 +42,10 @@ if status is-interactive
         --prompt='❯ ' \
         --pointer='▶' \
         --marker='✓' \
-        --color=bg:#eff1f5,bg+:#ccd0da,spinner:#df8e1d,hl:#d20f39 \
-        --color=fg:#4c4f69,header:#1e66f5,info:#179299,pointer:#dc8a78 \
-        --color=marker:#40a02b,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39 \
-        --color=border:#bcc0cc,label:#1e66f5 \
+        --color=bg:#232136,bg+:#433c59,spinner:#f6c177,hl:#eb6f92 \
+        --color=fg:#e0def4,header:#65b1cd,info:#9ccfd8,pointer:#eb98c3 \
+        --color=marker:#a3be8c,fg+:#eae8ff,prompt:#c4a7e7,hl+:#f083a2 \
+        --color=border:#4b4673,label:#65b1cd \
         --preview='if [ -d {} ]; then if command -v eza >/dev/null 2>&1; then eza --tree --level=2 {}; else ls -F {}; fi; elif [ -f {} ]; then if command -v bat >/dev/null 2>&1; then bat --color=always --line-range :200 {}; elif command -v batcat >/dev/null 2>&1; then batcat --color=always --line-range :200 {}; else cat {}; fi; fi'"
     set -g hydro_color_pwd $fish_color_cwd
     set -g hydro_color_git $fish_color_quote
