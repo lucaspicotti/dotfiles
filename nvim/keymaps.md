@@ -50,19 +50,15 @@ Esses atalhos são ativados automaticamente apenas quando um servidor de linguag
 | `<leader>rn` | Normal | `vim.lsp.buf.rename` | Renomeia o símbolo atual em todos os arquivos do projeto de forma inteligente. |
 | `<leader>lr` | Normal | `:LspRestart` | Reinicia todos os servidores de linguagem ativos. |
 
-## 3. Autocompletar & Sugestões (nvim-cmp & Copilot)
-*Configurados em [cmp.lua](file:///home/lucaspicotti/dotfiles/nvim/lua/plugins/lsp/cmp.lua) e [copilot.lua](file:///home/lucaspicotti/dotfiles/nvim/lua/plugins/lsp/copilot.lua)*
+## 3. Autocompletar (nvim-cmp)
+*Configurado em [cmp.lua](file:///home/lucaspicotti/dotfiles/nvim/lua/plugins/lsp/cmp.lua)*
 
 | Atalho | Modo | Ação | Descrição |
 |---|---|---|---|
-| `<Tab>` | Inserção | Confirmar / Aceitar | Se o menu do CMP estiver aberto, confirma a seleção do autocomplete. Caso contrário, se uma sugestão do Copilot estiver visível, aceita a sugestão. |
+| `<Tab>` | Inserção | Confirmar / Aceitar | Se o menu do CMP estiver aberto, confirma a seleção do autocomplete. |
 | `<C-j>` | Inserção | Avançar no menu | Seleciona o próximo item da lista de autocompletar do CMP. |
 | `<C-k>` | Inserção | Voltar no menu | Seleciona o item anterior na lista de autocompletar do CMP. |
 | `<C-e>` | Inserção | Fechar menu | Cancela/fecha o menu de autocompletar do CMP. |
-| `<leader>ct` | Normal | Alternar Copilot | Ativa ou desativa o trigger automático das sugestões em linha do Copilot (ghost text). |
-| `<M-]>` (Alt+`]`) | Inserção | Próxima sugestão | Exibe a próxima sugestão do Copilot (ou força a exibição manual se estiver desligado). |
-| `<M-[>` (Alt+`[`) | Inserção | Sugestão anterior | Exibe a sugestão anterior do Copilot. |
-| `<C-]>` (Ctrl+`]`) | Inserção | Descartar dica | Oculta/cancela a sugestão atual do Copilot exibida na tela. |
 
 ## 4. Integração Git (gitsigns)
 *Configurados em [gitsigns.lua](file:///home/lucaspicotti/dotfiles/nvim/lua/plugins/git/gitsigns.lua)*

@@ -25,7 +25,6 @@ return {
       luasnip = "LuaSnip",
       nvim_lua = "Lua",
       path = "Path",
-      copilot = "Copilot",
     }
 
     local function ltrim(s)
@@ -88,12 +87,7 @@ return {
           if cmp.visible() then
             cmp.confirm({ select = true })
           else
-            local ok, copilot_suggestion = pcall(require, "copilot.suggestion")
-            if ok and copilot_suggestion.is_visible() then
-              copilot_suggestion.accept()
-            else
-              fallback()
-            end
+            fallback()
           end
         end, { "i", "s" }),
 

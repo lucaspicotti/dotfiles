@@ -13,9 +13,7 @@ local function lsp()
   local names = {}
 
   for _, client in ipairs(clients) do
-    if client.name ~= "GitHub Copilot" then
-      table.insert(names, client.name)
-    end
+    table.insert(names, client.name)
   end
 
   if #names == 0 then
@@ -63,7 +61,6 @@ return {
   event = "VeryLazy",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
-    "ofseed/copilot-status.nvim",
   },
   opts = {
     options = {
@@ -120,7 +117,6 @@ return {
           end,
           name = "overseer-placeholder",
         },
-        "copilot",
         indent,
         {
           "encoding",
