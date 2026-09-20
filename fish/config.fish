@@ -33,3 +33,5 @@ end
 
 # Added by Antigravity CLI installer
 set -gx PATH "/home/lucaspicotti/.local/bin" $PATH
+
+set -gx CPM_SOURCE_CACHE $HOME/.cache/CPM
