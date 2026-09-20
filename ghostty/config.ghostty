@@ -10,8 +10,8 @@ font-size = 14
 font-feature = +liga
 font-feature = +calt
 
-theme = everforest-dark-medium
-window-theme = dark
+theme = TokyoNight Day
+window-theme = light
 
 window-padding-x = 5
 window-padding-y = 5

@@ -6,9 +6,9 @@ if status is-interactive
     abbr -a vim nvim
     abbr -a phpunit "/home/lucaspicotti/phpunit-9.phar"
 
-    # Theme configurations (Everforest Dark)
-    set -gx BAT_THEME "gruvbox-dark"
-    
+    # Theme configurations (TokyoNight Day)
+    set -gx BAT_THEME "GitHub"
+
     set -gx FZF_DEFAULT_OPTS " \
         --height=100% \
         --layout=reverse \
@@ -17,10 +17,10 @@ if status is-interactive
         --prompt='❯ ' \
         --pointer='▶' \
         --marker='✓' \
-        --color=bg+:#343f44,spinner:#a7c080,hl:#e67e80 \
-        --color=fg:#d3c6aa,header:#e67e80,info:#83c092,pointer:#83c092 \
-        --color=marker:#dbbc7f,fg+:#d3c6aa,prompt:#a7c080,hl+:#e67e80 \
-        --color=border:#3d484d,label:#d3c6aa \
+        --color=bg+:#b7c1e3,spinner:#587539,hl:#f52a65 \
+        --color=fg:#3760bf,header:#f52a65,info:#007197,pointer:#007197 \
+        --color=marker:#8c6c3e,fg+:#3760bf,prompt:#587539,hl+:#f52a65 \
+        --color=border:#c4c8da,label:#3760bf \
         --preview='if [ -d {} ]; then if command -v eza >/dev/null 2>&1; then eza --tree --level=2 {}; else ls -F {}; fi; elif [ -f {} ]; then if command -v bat >/dev/null 2>&1; then bat --color=always --line-range :200 {}; elif command -v batcat >/dev/null 2>&1; then batcat --color=always --line-range :200 {}; else cat {}; fi; fi'"
     set -g hydro_color_pwd $fish_color_cwd
     set -g hydro_color_git $fish_color_quote
