@@ -1,27 +1,28 @@
 gui:
   nerdFontsVersion: "3"
   theme:
+    # Catppuccin Latte, blue accent.
     activeBorderColor:
-      - "#587539"
+      - "#1e66f5"
       - bold
     inactiveBorderColor:
-      - "#a1a6c5"
+      - "#8c8fa1"
     optionsTextColor:
-      - "#2e7de9"
+      - "#1e66f5"
     selectedLineBgColor:
-      - "#b7c1e3"
+      - "#ccd0da"
     selectedRangeBgColor:
-      - "#b7c1e3"
+      - "#ccd0da"
     cherryPickedCommitBgColor:
-      - "#c4c8da"
+      - "#bcc0cc"
     cherryPickedCommitFgColor:
-      - "#8c6c3e"
+      - "#1e66f5"
     unstagedChangesColor:
-      - "#f52a65"
+      - "#d20f39"
     defaultFgColor:
-      - "#3760bf"
+      - "#4c4f69"
     searchingActiveBorderColor:
-      - "#b15c00"
+      - "#df8e1d"
 git:
   pagers:
     - colorArg: always

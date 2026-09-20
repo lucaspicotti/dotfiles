@@ -15,6 +15,6 @@ require("lazy").setup('user.plugins', {
     notify = false,
   },
   install = {
-    colorscheme = { "tokyonight" },
+    colorscheme = { "catppuccin-latte" },
   },
 })

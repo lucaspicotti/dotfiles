@@ -70,6 +70,12 @@ main() {
     link_path "$DOTFILES/ghostty" "$CONFIG_DIR/ghostty"
   fi
 
+  # Ghostty only discovers themes inside its themes directory.
+  if [ -f "$DOTFILES/ghostty/themes/catppuccin-latte.conf" ]; then
+    mkdir -p "$CONFIG_DIR/ghostty/themes"
+    link_path "$DOTFILES/ghostty/themes/catppuccin-latte.conf" "$CONFIG_DIR/ghostty/themes/Catppuccin Latte"
+  fi
+
   # tmux
   if [ -f "$DOTFILES/tmux/tmux.conf" ]; then
     link_path "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
@@ -91,6 +97,35 @@ main() {
     link_path "$DOTFILES/fish" "$CONFIG_DIR/fish"
   else
     warn "pasta fish/ não encontrada; pulando configuração do fish"
+  fi
+
+  # bat
+  if [ -d "$DOTFILES/bat" ]; then
+    link_path "$DOTFILES/bat" "$CONFIG_DIR/bat"
+  fi
+
+  # lazygit
+  if [ -d "$DOTFILES/lazygit" ]; then
+    link_path "$DOTFILES/lazygit" "$CONFIG_DIR/lazygit"
+  fi
+
+  # codex
+  if [ -f "$DOTFILES/codex/config.toml" ]; then
+    link_path "$DOTFILES/codex/config.toml" "$HOME/.codex/config.toml"
+    mkdir -p "$HOME/.codex/themes"
+    link_path "$DOTFILES/codex/themes/Catppuccin Latte.tmTheme" "$HOME/.codex/themes/Catppuccin Latte.tmTheme"
+  fi
+
+  # Claude Code has no custom theme import; light mode is its closest native option.
+  if [ -f "$DOTFILES/claude/settings.json" ]; then
+    link_path "$DOTFILES/claude/settings.json" "$HOME/.claude/settings.json"
+  fi
+
+  # opencode
+  if [ -f "$DOTFILES/opencode/opencode.jsonc" ]; then
+    link_path "$DOTFILES/opencode/opencode.jsonc" "$CONFIG_DIR/opencode/opencode.jsonc"
+    mkdir -p "$CONFIG_DIR/opencode/themes"
+    link_path "$DOTFILES/opencode/catppuccin-latte-blue.json" "$CONFIG_DIR/opencode/themes/catppuccin-latte-blue.json"
   fi
 
   log "instalação concluída"

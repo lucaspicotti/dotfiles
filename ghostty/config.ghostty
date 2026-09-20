@@ -10,7 +10,7 @@ font-size = 14
 font-feature = +liga
 font-feature = +calt
 
-theme = TokyoNight Day
+theme = Catppuccin Latte
 window-theme = light
 
 window-padding-x = 5
