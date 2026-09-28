@@ -11,7 +11,7 @@ return {
       adapters = {
         require("neotest-phpunit")({
           phpunit_cmd = function()
-            -- Usa o alias/abbr "phpunit" do sistema (que configuramos no Fish)
+            -- Usa o phpunit do PATH; aliases do shell não valem dentro do Neovim
             return "phpunit"
           end,
         }),

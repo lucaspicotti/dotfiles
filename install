@@ -66,6 +66,10 @@ setup_zsh() {
     return
   fi
 
+  # Linka antes do omz: com KEEP_ZSHRC=yes ele preserva o nosso .zshrc
+  link_path "$DOTFILES/zsh/.zshenv" "$HOME/.zshenv"
+  link_path "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+
   if [ ! -d "$HOME/.oh-my-zsh" ]; then
     log "instalando oh-my-zsh"
     RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c \
@@ -80,9 +84,6 @@ setup_zsh() {
   local plugins_dir="$DOTFILES/zsh/custom/plugins"
   clone_if_missing https://github.com/zsh-users/zsh-autosuggestions "$plugins_dir/zsh-autosuggestions"
   clone_if_missing https://github.com/zsh-users/zsh-syntax-highlighting "$plugins_dir/zsh-syntax-highlighting"
-
-  link_path "$DOTFILES/zsh/.zshenv" "$HOME/.zshenv"
-  link_path "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
 }
 
 main() {
