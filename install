@@ -86,6 +86,38 @@ setup_zsh() {
   clone_if_missing https://github.com/zsh-users/zsh-syntax-highlighting "$plugins_dir/zsh-syntax-highlighting"
 }
 
+setup_kitty() {
+  local app="$HOME/.local/kitty.app"
+
+  if [ ! -x "$app/bin/kitty" ]; then
+    log "instalando kitty (instalador oficial)"
+    curl -fsSL https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin launch=n
+  fi
+
+  ln -sf "$app/bin/kitty" "$app/bin/kitten" "$BIN_DIR/"
+
+  # Atalho no menu de aplicativos, apontando para o binário e ícone do kitty.app
+  local apps_dir="$HOME/.local/share/applications"
+  mkdir -p "$apps_dir"
+  cp "$app/share/applications/kitty.desktop" "$app/share/applications/kitty-open.desktop" "$apps_dir/"
+  sed -i "s|Icon=kitty|Icon=$app/share/icons/hicolor/256x256/apps/kitty.png|g; s|Exec=kitty|Exec=$app/bin/kitty|g" \
+    "$apps_dir/kitty.desktop" "$apps_dir/kitty-open.desktop"
+
+  link_path "$DOTFILES/kitty" "$CONFIG_DIR/kitty"
+}
+
+setup_tmux() {
+  link_path "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
+
+  if ! command -v tmux >/dev/null 2>&1; then
+    warn "tmux não encontrado; pulando plugins do tmux"
+    return
+  fi
+
+  clone_if_missing https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+  "$HOME/.tmux/plugins/tpm/bin/install_plugins"
+}
+
 main() {
   log "iniciando instalação"
 
@@ -95,14 +127,13 @@ main() {
   require_cmd git
   require_cmd nvim
   require_cmd tmux
-  require_cmd kitty
   require_cmd fish
   require_cmd zsh
   require_cmd fzf
 
   # kitty
   if [ -d "$DOTFILES/kitty" ]; then
-    link_path "$DOTFILES/kitty" "$CONFIG_DIR/kitty"
+    setup_kitty
   fi
 
   # ghostty
@@ -116,9 +147,9 @@ main() {
     link_path "$DOTFILES/ghostty/themes/catppuccin-latte.conf" "$CONFIG_DIR/ghostty/themes/Catppuccin Latte"
   fi
 
-  # tmux
+  # tmux + TPM
   if [ -f "$DOTFILES/tmux/tmux.conf" ]; then
-    link_path "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
+    setup_tmux
   fi
 
   # scripts (t, portcheck, bitrix_sync, ...)
