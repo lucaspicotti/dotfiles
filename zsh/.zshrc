@@ -4,8 +4,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # O omz carrega automaticamente todo *.zsh em $ZSH_CUSTOM.
 ZSH_CUSTOM="$DOTFILES/zsh/custom"
 
-# Alternativas: robbyrussell
-ZSH_THEME="robbyrussell"
+# Alternativas: robbyrussell (padrão do omz)
+ZSH_THEME="lambda-dracula"
 
 # zsh-syntax-highlighting precisa ser o último
 plugins=(
