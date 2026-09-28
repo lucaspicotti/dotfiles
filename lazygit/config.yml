@@ -1,28 +1,35 @@
 gui:
   nerdFontsVersion: "3"
   theme:
-    # Duskfox (nightfox.nvim), magenta accent.
+    # Dracula (https://draculatheme.com/lazygit)
     activeBorderColor:
-      - "#c4a7e7"
+      - "#ff79c6"
       - bold
     inactiveBorderColor:
-      - "#817c9c"
+      - "#bd93f9"
     optionsTextColor:
-      - "#65b1cd"
+      - "#6272a4"
     selectedLineBgColor:
-      - "#433c59"
+      - "#44475a"
     selectedRangeBgColor:
-      - "#433c59"
+      - "#44475a"
     cherryPickedCommitBgColor:
-      - "#4b4673"
+      - "#8be9fd"
     cherryPickedCommitFgColor:
-      - "#65b1cd"
+      - "#282a36"
+    markedBaseCommitBgColor:
+      - "#f1fa8c"
+    markedBaseCommitFgColor:
+      - "#282a36"
     unstagedChangesColor:
-      - "#eb6f92"
+      - "#ff5555"
     defaultFgColor:
-      - "#e0def4"
+      - "#f8f8f2"
     searchingActiveBorderColor:
-      - "#f6c177"
+      - "#8be9fd"
+      - bold
+  authorColors:
+    "*": "#bd93f9"
 git:
   pagers:
     - colorArg: always

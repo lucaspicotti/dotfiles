@@ -233,22 +233,28 @@ main() {
     link_path "$DOTFILES/lazygit" "$CONFIG_DIR/lazygit"
   fi
 
-  # codex
-  if [ -f "$DOTFILES/codex/config.toml" ]; then
-    link_path "$DOTFILES/codex/config.toml" "$HOME/.codex/config.toml"
+  # codex: o config.toml fica local (o Codex reescreve o arquivo); só os temas extras são linkados.
+  # Tema atual: tui.theme = "dracula", embutido no Codex.
+  if [ -d "$DOTFILES/codex/themes" ]; then
     mkdir -p "$HOME/.codex/themes"
-    link_path "$DOTFILES/codex/themes/Catppuccin Latte.tmTheme" "$HOME/.codex/themes/Catppuccin Latte.tmTheme"
-    link_path "$DOTFILES/codex/themes/Duskfox.tmTheme" "$HOME/.codex/themes/Duskfox.tmTheme"
+    for theme in "$DOTFILES"/codex/themes/*.tmTheme; do
+      link_path "$theme" "$HOME/.codex/themes/$(basename "$theme")"
+    done
   fi
 
-  # Claude Code has no custom theme import; dark mode is its closest native option.
-  if [ -f "$DOTFILES/claude/settings.json" ]; then
-    link_path "$DOTFILES/claude/settings.json" "$HOME/.claude/settings.json"
+  # Claude Code: o settings.json fica local (o Claude reescreve o arquivo); só o tema é linkado.
+  # Para ativar: /theme -> Dracula (grava "theme": "custom:dracula").
+  if [ -d "$DOTFILES/claude/themes" ]; then
+    mkdir -p "$HOME/.claude/themes"
+    for theme in "$DOTFILES"/claude/themes/*.json; do
+      link_path "$theme" "$HOME/.claude/themes/$(basename "$theme")"
+    done
   fi
 
   # opencode
   if [ -f "$DOTFILES/opencode/opencode.jsonc" ]; then
     link_path "$DOTFILES/opencode/opencode.jsonc" "$CONFIG_DIR/opencode/opencode.jsonc"
+    link_path "$DOTFILES/opencode/tui.json" "$CONFIG_DIR/opencode/tui.json"
     mkdir -p "$CONFIG_DIR/opencode/themes"
     link_path "$DOTFILES/opencode/catppuccin-latte-blue.json" "$CONFIG_DIR/opencode/themes/catppuccin-latte-blue.json"
   fi
