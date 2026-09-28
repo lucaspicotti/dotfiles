@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Aplica a sincronização Bitrix -> Obsidian
+
+exec python3 "$HOME/Documentos/ObsidianVault/scripts/sync_bitrix.py" --apply "$@"

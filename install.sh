@@ -178,11 +178,12 @@ main() {
     link_path "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
   fi
 
-  # script t (opcional)
-  if [ -f "$DOTFILES/scripts/t" ]; then
-    link_path "$DOTFILES/scripts/t" "$BIN_DIR/t"
-    chmod +x "$BIN_DIR/t"
-  fi
+  # scripts (t, portcheck, bitrix_sync, ...)
+  for script in "$DOTFILES"/scripts/*; do
+    [ -f "$script" ] || continue
+    chmod +x "$script"
+    link_path "$script" "$BIN_DIR/$(basename "$script")"
+  done
 
   # bat
   if [ -d "$DOTFILES/bat" ]; then

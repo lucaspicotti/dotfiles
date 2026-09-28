@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Dry-run da sincronização Bitrix -> Obsidian
+
+exec python3 "$HOME/Documentos/ObsidianVault/scripts/sync_bitrix.py" --dry-run "$@"

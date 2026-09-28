@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if ! pgrep -x syncthing >/dev/null; then
+    echo "Syncthing nao esta rodando."
+    exit 1
+fi
+
+echo "Syncthing status:"
+syncthing cli show system

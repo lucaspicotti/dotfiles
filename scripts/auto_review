@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Roda o auto_review.py no diretório atual, repassando opções extras
+
+exec /var/www/auto_review/auto_review.py . "$@"

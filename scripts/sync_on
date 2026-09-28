@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if ! pgrep -x syncthing >/dev/null; then
+    setsid syncthing serve >/dev/null 2>&1 &
+    sleep 1
+fi
+
+sync_status

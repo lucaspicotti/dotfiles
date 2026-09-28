@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Verifica se algo está escutando/conectado numa porta TCP; útil para confirmar shutdown de processos em dev
+
+if [[ $# -ne 1 ]]; then
+    echo "uso: portcheck <porta>"
+    exit 1
+fi
+
+port=$1
+if lsof -i :"$port"; then
+    exit 0
+else
+    echo "porta $port livre - nenhum processo escutando/conectado"
+    exit 1
+fi
