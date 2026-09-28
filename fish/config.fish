@@ -1,6 +1,7 @@
 if status is-interactive
     fish_add_path ~/.local/bin
     fish_add_path ~/go/bin
+    fish_add_path /usr/local/go/bin
     fish_add_path ~/.config/composer/vendor/bin
 
     abbr -a vim nvim
