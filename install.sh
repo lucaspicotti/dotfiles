@@ -116,6 +116,11 @@ setup_zsh() {
       "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   fi
 
+  if [ ! -x "$HOME/.local/share/fnm/fnm" ]; then
+    log "instalando fnm"
+    curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "$HOME/.local/share/fnm" --skip-shell
+  fi
+
   local plugins_dir="$DOTFILES/zsh/custom/plugins"
   clone_if_missing https://github.com/zsh-users/zsh-autosuggestions "$plugins_dir/zsh-autosuggestions"
   clone_if_missing https://github.com/zsh-users/zsh-syntax-highlighting "$plugins_dir/zsh-syntax-highlighting"

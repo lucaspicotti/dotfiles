@@ -10,6 +10,7 @@ path=(
   $HOME/go/bin
   /usr/local/go/bin
   $HOME/.config/composer/vendor/bin
+  $HOME/.local/share/fnm
   $path
 )
 

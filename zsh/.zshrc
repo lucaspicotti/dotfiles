@@ -7,6 +7,13 @@ ZSH_CUSTOM="$DOTFILES/zsh/custom"
 # Alternativas: robbyrussell
 ZSH_THEME="robbyrussell"
 
-plugins=(git)
+# zsh-syntax-highlighting precisa ser o último
+plugins=(
+  git
+  fzf
+  fnm
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
 
 source "$ZSH/oh-my-zsh.sh"
