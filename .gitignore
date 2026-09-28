@@ -1,2 +1,5 @@
 ai-context/skills/synced/
 fish/fish_variables
+# Plugins externos do zsh, clonados pelo install
+zsh/custom/plugins/zsh-autosuggestions/
+zsh/custom/plugins/zsh-syntax-highlighting/

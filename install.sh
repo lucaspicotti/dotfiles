@@ -33,8 +33,8 @@ install_system_packages() {
   log "Atualizando pacotes..."
   sudo apt-get update
   
-  log "Instalando fish, ghostty, git, curl e fzf..."
-  sudo apt-get install -y fish ghostty git curl fzf build-essential
+  log "Instalando fish, zsh, ghostty, git, curl e fzf..."
+  sudo apt-get install -y fish zsh ghostty git curl fzf build-essential
 }
 
 # 2. Install Neovim (Latest Stable)
@@ -91,6 +91,39 @@ link_path() {
   log "Linkado: $target -> $source"
 }
 
+clone_if_missing() {
+  local repo="$1"
+  local target="$2"
+
+  if [ -d "$target/.git" ]; then
+    log "já clonado: $target"
+    return
+  fi
+
+  git clone --depth=1 "$repo" "$target"
+  log "clonado: $repo -> $target"
+}
+
+setup_zsh() {
+  if ! command -v zsh >/dev/null 2>&1; then
+    warn "zsh não encontrado; pulando configuração do zsh"
+    return
+  fi
+
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    log "instalando oh-my-zsh"
+    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c \
+      "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  fi
+
+  local plugins_dir="$DOTFILES/zsh/custom/plugins"
+  clone_if_missing https://github.com/zsh-users/zsh-autosuggestions "$plugins_dir/zsh-autosuggestions"
+  clone_if_missing https://github.com/zsh-users/zsh-syntax-highlighting "$plugins_dir/zsh-syntax-highlighting"
+
+  link_path "$DOTFILES/zsh/.zshenv" "$HOME/.zshenv"
+  link_path "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+}
+
 main() {
   log "Iniciando a instalação dos dotfiles e dependências..."
 
@@ -115,6 +148,9 @@ main() {
   if [ -d "$DOTFILES/fish" ]; then
     link_path "$DOTFILES/fish" "$CONFIG_DIR/fish"
   fi
+
+  # zsh + oh-my-zsh
+  setup_zsh
 
   # ghostty
   if [ -d "$DOTFILES/ghostty" ]; then

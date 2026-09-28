@@ -47,6 +47,39 @@ require_cmd() {
   fi
 }
 
+clone_if_missing() {
+  local repo="$1"
+  local target="$2"
+
+  if [ -d "$target/.git" ]; then
+    log "já clonado: $target"
+    return
+  fi
+
+  git clone --depth=1 "$repo" "$target"
+  log "clonado: $repo -> $target"
+}
+
+setup_zsh() {
+  if ! command -v zsh >/dev/null 2>&1; then
+    warn "zsh não encontrado; pulando configuração do zsh"
+    return
+  fi
+
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    log "instalando oh-my-zsh"
+    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c \
+      "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  fi
+
+  local plugins_dir="$DOTFILES/zsh/custom/plugins"
+  clone_if_missing https://github.com/zsh-users/zsh-autosuggestions "$plugins_dir/zsh-autosuggestions"
+  clone_if_missing https://github.com/zsh-users/zsh-syntax-highlighting "$plugins_dir/zsh-syntax-highlighting"
+
+  link_path "$DOTFILES/zsh/.zshenv" "$HOME/.zshenv"
+  link_path "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+}
+
 main() {
   log "iniciando instalação"
 
@@ -58,6 +91,7 @@ main() {
   require_cmd tmux
   require_cmd kitty
   require_cmd fish
+  require_cmd zsh
   require_cmd fzf
 
   # kitty
@@ -98,6 +132,9 @@ main() {
   else
     warn "pasta fish/ não encontrada; pulando configuração do fish"
   fi
+
+  # zsh + oh-my-zsh
+  setup_zsh
 
   # bat
   if [ -d "$DOTFILES/bat" ]; then
