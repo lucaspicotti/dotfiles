@@ -25,6 +25,17 @@ Este documento orienta a IA a localizar e montar formulários do ERP com os comp
 - validação visual
 - ação principal e ação secundária
 
+## Formulário em tela de modal no mobile (`vendpago-screen-form`)
+
+Para telas de formulário (`.tpl` próprio, `Zend_Form`) que no mobile devem parecer o `vendpago-screen-modal` em tela cheia, sem abrir modal nem mudar o backend. No desktop nada muda.
+
+- Arquivos: `components/_screen-form.scss` (`@use` no entry) e `public/scripts/vendpago-screen-form.js`.
+- Marcação no container da página: classe `vendpago-screen-form` + `data-screen-form="<seletor do form>"`, e no fim do container `<footer class="vendpago-screen-form__rodape" data-screen-form-rodape></footer>`.
+- O "Voltar" do cabeçalho recebe `vendpago-screen-form__voltar` (no `vendpago-page-header.tpl`: `'extraClass' => "vendpago-screen-form__voltar"` no `actionButton`) e vira o "←" à esquerda.
+- No mobile: esconde navbar, menu lateral e barra inferior; cabeçalho fixo (←, breadcrumb, título); card sem moldura; botões do form (`.btn-forms-bootstrap`) movidos para o rodapé fixo, com área segura. A `action-bar` fica só no desktop.
+- Use só em telas cujo "Voltar" leve a um destino fixo e válido (todas as entradas vêm de dentro do app), porque o cromo do app some.
+- Em uso: `/produtos/add`, `/produtos/edit/pid/X`, `/produtos/duplicate/pid/X`, `/produtos/ativar/pid/X`, `/produtos/inativar/pid/X`, `/erp/add-produto-xml`.
+
 ## Casos comuns
 
 - `vendpago-date-wrapper`

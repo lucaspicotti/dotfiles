@@ -1,0 +1,4 @@
+interface:
+  display_name: "PHP PR Quality Gate"
+  short_description: "Revisao defensiva de PR com testes e DoD"
+  default_prompt: "Use $php-pr-quality-gate para revisar esta branch, confrontar os achados e validar o DoD e o percurso do PR."
