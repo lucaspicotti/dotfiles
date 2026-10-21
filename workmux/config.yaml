@@ -21,3 +21,4 @@ dashboard:
 
 sidebar:
   group_by: project
+nerdfont: true
