@@ -20,7 +20,7 @@ Sem sudo (pula o apt): `./install`, que é o mesmo que `./install.sh --no-packag
 
 ### O que o script `install.sh` faz?
 - Atualiza as fontes e instala os pacotes do sistema (`zsh`, `tmux`, `git`, `curl`, `build-essential`).
-- Instala o **mise** em `~/.local/bin` e, com ele, as ferramentas de CLI listadas em `mise/config.toml` (Neovim, fzf, bat, fd, ripgrep, jq, lazygit, gh, workmux).
+- Instala o **mise** em `~/.local/bin` e, com ele, as ferramentas de CLI listadas em `mise/config.toml` (Neovim, fzf, bat, fd, ripgrep, jq, lazygit, gh, tree-sitter, workmux, zoxide e tmux-file-picker).
 - Instala o **kitty** pelo instalador oficial em `~/.local/kitty.app` (com atalho no menu de aplicativos) e o **TPM** com os plugins do tmux.
 - Instala o **oh-my-zsh**, o **fnm** e clona os plugins externos do zsh (`zsh-autosuggestions`, `zsh-syntax-highlighting`) em `zsh/custom/plugins/`, que ficam fora do git.
 - Configura o **workmux**: linka `workmux/config.yaml`, roda `workmux setup` (hooks de status e skills; precisa de terminal interativo) e linka as skills no Codex, que o setup não cobre.
@@ -61,11 +61,15 @@ Os atalhos funcionam sem prefix (o kitty repassa os `Ctrl+Shift+…` ao tmux com
 
 ## 🧰 mise
 
-As ferramentas de CLI ficam em `mise/config.toml` (linkado em `~/.config/mise/config.toml`), todas em `latest`:
+As ferramentas de CLI ficam em `mise/config.toml` (linkado em `~/.config/mise/config.toml`), todas em `latest` (incluindo o zoxide):
 
 - `mise install`: instala o que faltar; `mise upgrade`: atualiza; `mise ls`: lista versões.
 - No shell interativo, `zsh/custom/mise.zsh` roda `mise activate`; os shims em `~/.local/share/mise/shims` (no `.zshenv`) cobrem shells não interativos, como hooks e o `run-shell` do tmux.
 - Ferramenta nova: `mise use -g <ferramenta>` grava direto no `mise/config.toml` do repositório.
+
+O `tree` do projeto [unix-tree](https://gitlab.com/OldManProgrammer/unix-tree) é instalado pelo `apt` no Ubuntu/Debian (`sudo apt-get install tree`), pois o repositório distribui o código-fonte da ferramenta e não há uma entrada `tree` no registro do mise. O instalador dos dotfiles inclui esse pacote. O `zoxide` é instalado pelo mise e inicializado no zsh para habilitar os atalhos `z` e `zi`.
+
+O [tmux-file-picker](https://github.com/raine/tmux-file-picker) é instalado pelo backend HTTP do mise a partir do script oficial. Requer `fzf` e `fd` (já instalados pelo mise); `bat`, `zoxide` e `tree` habilitam previews e a seleção de diretórios. No tmux, `prefix` + `Ctrl-f` abre o seletor de arquivos e `prefix` + `Ctrl-z` abre a seleção via zoxide.
 
 ## 🌳 workmux
 

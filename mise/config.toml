@@ -11,4 +11,11 @@ ripgrep = "latest"
 jq = "latest"
 lazygit = "latest"
 gh = "latest"
+tree-sitter = "latest"
 workmux = "latest"
+zoxide = "latest"
+
+[tools."http:tmux-file-picker"]
+version = "main"
+url = "https://raw.githubusercontent.com/raine/tmux-file-picker/main/tmux-file-picker"
+bin = "tmux-file-picker"

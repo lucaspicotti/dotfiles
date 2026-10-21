@@ -23,8 +23,8 @@ install_system_packages() {
   log "Atualizando pacotes..."
   sudo apt-get update
 
-  log "Instalando zsh, tmux, git e curl..."
-  sudo apt-get install -y zsh tmux git curl build-essential
+  log "Instalando zsh, tmux, git, curl e tree..."
+  sudo apt-get install -y zsh tmux git curl build-essential tree
 }
 
 # 2. Helper to backup and create symbolic links
@@ -67,7 +67,7 @@ clone_if_missing() {
   log "clonado: $repo -> $target"
 }
 
-# 3. Ferramentas de CLI (nvim, fzf, bat, fd, rg, jq, lazygit, gh, workmux) via mise/config.toml
+# 3. Ferramentas de CLI (nvim, fzf, bat, fd, rg, jq, lazygit, gh, tree-sitter, workmux) via mise/config.toml
 setup_mise() {
   if ! command -v mise >/dev/null 2>&1 && [ ! -x "$BIN_DIR/mise" ]; then
     log "instalando mise"

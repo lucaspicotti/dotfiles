@@ -2,3 +2,7 @@
 if (( $+commands[mise] )); then
   eval "$(mise activate zsh)"
 fi
+
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
