@@ -1,7 +1,7 @@
 return {
-  "neovim-treesitter/nvim-treesitter",
+  "nvim-treesitter/nvim-treesitter",
+  branch = "main",
   dependencies = {
-    "neovim-treesitter/treesitter-parser-registry",
     "JoosepAlviste/nvim-ts-context-commentstring",
     "numToStr/Comment.nvim",
   },
@@ -10,10 +10,10 @@ return {
   config = function()
     local ts = require("nvim-treesitter")
 
-    -- opcional; o README diz que setup só é necessário
-    -- se você quiser mudar o install_dir
+    -- Pasta própria: o kulala.nvim instala o parser dele em site/parser, e o
+    -- :TSUpdate tentaria atualizar o kulala_http se dividissem o mesmo diretório
     ts.setup({
-      install_dir = vim.fn.stdpath("data") .. "/site",
+      install_dir = vim.fn.stdpath("data") .. "/treesitter",
     })
 
     require("Comment").setup({
@@ -31,7 +31,6 @@ return {
       "php_only",
       "phpdoc",
       "json",
-      "jsonc",
       "yaml",
       "toml",
       "html",
@@ -75,5 +74,7 @@ return {
     })
 
     vim.treesitter.language.register("bash", { "zsh" })
+    -- O upstream não tem parser jsonc; o de json já entende comentários
+    vim.treesitter.language.register("json", { "jsonc" })
   end,
 }
