@@ -8,9 +8,6 @@ CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 BIN_DIR="$HOME/.local/bin"
 BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 
-# Skills que o `workmux setup` instala no Claude Code e que o Codex não recebe
-WORKMUX_SKILLS=(workmux merge rebase worktree coordinator open-pr)
-
 log() {
   printf '[dotfiles] %s\n' "$1"
 }
@@ -23,23 +20,11 @@ warn() {
 install_system_packages() {
   log "Instalando dependências do sistema..."
 
-  # Adiciona PPA do Fish
-  if ! apt-cache policy | grep -q "ppa.launchpadcontent.net/fish-shell/release-3"; then
-    log "Adicionando PPA do Fish Shell..."
-    sudo add-apt-repository ppa:fish-shell/release-3 -y
-  fi
-
-  # Adiciona PPA do Ghostty
-  if ! apt-cache policy | grep -q "ppa.launchpadcontent.net/mkasberg/ghostty-ubuntu"; then
-    log "Adicionando PPA do Ghostty..."
-    sudo add-apt-repository ppa:mkasberg/ghostty-ubuntu -y
-  fi
-
   log "Atualizando pacotes..."
   sudo apt-get update
 
-  log "Instalando fish, zsh, tmux, ghostty, git e curl..."
-  sudo apt-get install -y fish zsh tmux ghostty git curl build-essential
+  log "Instalando zsh, tmux, git e curl..."
+  sudo apt-get install -y zsh tmux git curl build-essential
 }
 
 # 2. Helper to backup and create symbolic links
@@ -174,13 +159,39 @@ setup_workmux() {
     warn "sem terminal interativo; rode depois: workmux setup"
   fi
 
-  # O setup não instala skills no Codex: reaproveita as do Claude Code
-  if [ -d "$HOME/.codex" ]; then
-    for skill in "${WORKMUX_SKILLS[@]}"; do
-      [ -d "$HOME/.claude/skills/$skill" ] || continue
-      link_path "$HOME/.claude/skills/$skill" "$HOME/.codex/skills/$skill"
-    done
+  # Os hooks rodam em /bin/sh, sem o PATH do mise: usa o caminho absoluto do shim
+  local claude_settings="$HOME/.claude/settings.json"
+  if [ -f "$claude_settings" ]; then
+    sed -i 's|"command": "workmux |"command": "$HOME/.local/share/mise/shims/workmux |' "$claude_settings"
   fi
+
+  # Mesmo problema nos hooks do Codex; o caminho vai expandido (o Codex pede para confiar de novo)
+  local codex_hooks="$HOME/.codex/hooks.json"
+  if [ -f "$codex_hooks" ]; then
+    sed -i "s|\"command\": \"workmux |\"command\": \"$HOME/.local/share/mise/shims/workmux |" "$codex_hooks"
+  fi
+
+}
+
+# Skills de ai-context/skills no Codex, uma a uma, porque ele mantém skills próprias
+# em ~/.codex/skills (o Claude Code recebe a pasta inteira, ver main)
+setup_codex_skills() {
+  [ -d "$HOME/.codex" ] || return 0
+
+  local skill name target
+  for skill in "$DOTFILES"/ai-context/skills/*/; do
+    skill="${skill%/}"
+    name="$(basename "$skill")"
+    # synced/ é sincronizado de fora e não é uma skill
+    [ "$name" = "synced" ] && continue
+    target="$HOME/.codex/skills/$name"
+    # Não sobrescreve skills que o próprio Codex instalou (ex.: graphify)
+    if [ -e "$target" ] && [ ! -L "$target" ]; then
+      log "skill própria do Codex mantida: $target"
+      continue
+    fi
+    link_path "$skill" "$target"
+  done
 }
 
 main() {
@@ -210,24 +221,11 @@ main() {
   # Linkar as configurações
   log "Configurando links simbólicos..."
 
-  # fish
-  if [ -d "$DOTFILES/fish" ]; then
-    link_path "$DOTFILES/fish" "$CONFIG_DIR/fish"
-  fi
-
   # zsh + oh-my-zsh
   setup_zsh
 
-  # ghostty
-  if [ -d "$DOTFILES/ghostty" ]; then
-    link_path "$DOTFILES/ghostty" "$CONFIG_DIR/ghostty"
-  fi
-
-  # Ghostty only discovers themes inside its themes directory.
-  if [ -f "$DOTFILES/ghostty/themes/catppuccin-latte.conf" ]; then
-    mkdir -p "$CONFIG_DIR/ghostty/themes"
-    link_path "$DOTFILES/ghostty/themes/catppuccin-latte.conf" "$CONFIG_DIR/ghostty/themes/Catppuccin Latte"
-  fi
+  # git
+  link_path "$DOTFILES/git/gitconfig" "$HOME/.gitconfig"
 
   # nvim (LazyVim)
   if [ -d "$DOTFILES/nvim" ]; then
@@ -254,10 +252,6 @@ main() {
   # bat
   if [ -d "$DOTFILES/bat" ]; then
     link_path "$DOTFILES/bat" "$CONFIG_DIR/bat"
-    # Temas de bat/themes só aparecem depois de recompilar o cache
-    if command -v bat >/dev/null 2>&1; then
-      bat cache --build >/dev/null
-    fi
   fi
 
   # lazygit
@@ -265,14 +259,8 @@ main() {
     link_path "$DOTFILES/lazygit" "$CONFIG_DIR/lazygit"
   fi
 
-  # codex: o config.toml fica local (o Codex reescreve o arquivo); só os temas extras são linkados.
-  # Tema atual: tui.theme = "dracula", embutido no Codex.
-  if [ -d "$DOTFILES/codex/themes" ]; then
-    mkdir -p "$HOME/.codex/themes"
-    for theme in "$DOTFILES"/codex/themes/*.tmTheme; do
-      link_path "$theme" "$HOME/.codex/themes/$(basename "$theme")"
-    done
-  fi
+  # codex: o config.toml fica local (o Codex reescreve o arquivo).
+  # Tema: tui.theme = "dracula", embutido no Codex.
 
   # Claude Code: o settings.json fica local (o Claude reescreve o arquivo); só o tema é linkado.
   # Para ativar: /theme -> Dracula (grava "theme": "custom:dracula").
@@ -287,14 +275,18 @@ main() {
   if [ -f "$DOTFILES/opencode/opencode.jsonc" ]; then
     link_path "$DOTFILES/opencode/opencode.jsonc" "$CONFIG_DIR/opencode/opencode.jsonc"
     link_path "$DOTFILES/opencode/tui.json" "$CONFIG_DIR/opencode/tui.json"
-    mkdir -p "$CONFIG_DIR/opencode/themes"
-    link_path "$DOTFILES/opencode/catppuccin-latte-blue.json" "$CONFIG_DIR/opencode/themes/catppuccin-latte-blue.json"
   fi
+
+  # Skills do Claude Code; antes do workmux, que grava as dele em ~/.claude/skills
+  link_path "$DOTFILES/ai-context/skills" "$HOME/.claude/skills"
 
   # workmux: config, hooks de status e skills (depois do Claude/Codex/opencode)
   if [ -f "$DOTFILES/workmux/config.yaml" ]; then
     setup_workmux
   fi
+
+  # Skills no Codex, incluindo as que o workmux acabou de instalar
+  setup_codex_skills
 
   # 4. Bootstrap/Instalação de plugins do LazyVim (Neovim)
   log "Instalando/Sincronizando plugins do LazyVim..."

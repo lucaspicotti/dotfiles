@@ -1,0 +1,8 @@
+# Linkado em ~/.gitconfig. Ajustes por máquina (e-mail de trabalho, credenciais)
+# ficam em ~/.gitconfig.local, que não é versionado.
+[user]
+	name = lucaspicotti
+	email = lucaspicotti@gmail.com
+
+[include]
+	path = ~/.gitconfig.local

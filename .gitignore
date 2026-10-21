@@ -1,5 +1,4 @@
 ai-context/skills/synced/
-fish/fish_variables
 # Plugins externos do zsh, clonados pelo install
 zsh/custom/plugins/zsh-autosuggestions/
 zsh/custom/plugins/zsh-syntax-highlighting/
@@ -11,3 +10,6 @@ ai-context/skills/rebase/
 ai-context/skills/worktree/
 ai-context/skills/coordinator/
 ai-context/skills/open-pr/
+# Skill instalada pelo graphify e lixeira de skills
+ai-context/skills/graphify/
+ai-context/skills/.trash/

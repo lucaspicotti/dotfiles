@@ -19,14 +19,14 @@ chmod +x install.sh
 Sem sudo (pula o apt): `./install`, que é o mesmo que `./install.sh --no-packages`.
 
 ### O que o script `install.sh` faz?
-- Adiciona os PPAs oficiais do **Fish Shell** e **Ghostty**.
-- Atualiza as fontes e instala os pacotes do sistema (`fish`, `zsh`, `tmux`, `ghostty`, `git`, `curl`, `build-essential`).
+- Atualiza as fontes e instala os pacotes do sistema (`zsh`, `tmux`, `git`, `curl`, `build-essential`).
 - Instala o **mise** em `~/.local/bin` e, com ele, as ferramentas de CLI listadas em `mise/config.toml` (Neovim, fzf, bat, fd, ripgrep, jq, lazygit, gh, workmux).
 - Instala o **kitty** pelo instalador oficial em `~/.local/kitty.app` (com atalho no menu de aplicativos) e o **TPM** com os plugins do tmux.
 - Instala o **oh-my-zsh**, o **fnm** e clona os plugins externos do zsh (`zsh-autosuggestions`, `zsh-syntax-highlighting`) em `zsh/custom/plugins/`, que ficam fora do git.
 - Configura o **workmux**: linka `workmux/config.yaml`, roda `workmux setup` (hooks de status e skills; precisa de terminal interativo) e linka as skills no Codex, que o setup não cobre.
+- Linka as skills de `ai-context/skills` no Claude Code (`~/.claude/skills`, a pasta inteira) e no Codex (`~/.codex/skills`, uma a uma, preservando as skills próprias do Codex).
 - Faz backup de qualquer configuração existente em `~/.config` na pasta `~/.dotfiles_backup/` para evitar perdas de dados.
-- Cria os links simbólicos necessários de `~/dotfiles` para `~/.config`, além de `~/.zshrc` e `~/.zshenv`.
+- Cria os links simbólicos necessários de `~/dotfiles` para `~/.config`, além de `~/.zshrc`, `~/.zshenv` e `~/.gitconfig` (ajustes por máquina em `~/.gitconfig.local`, fora do git).
 - Linka os scripts de `scripts/` em `~/.local/bin`.
 - Roda o bootstrap do **LazyVim** em segundo plano para baixar e sincronizar todos os plugins do Neovim.
 
@@ -44,7 +44,7 @@ O Node é gerenciado pelo `fnm`, que troca de versão ao entrar numa pasta com `
 
 O kitty abre direto na sessão tmux `main`, com zsh. Abas e splits ficam por conta do tmux; do kitty só sobram copiar/colar (`Ctrl+Shift+c/v`), fonte (`Ctrl+Shift+=/-/Backspace`), nova janela (`Ctrl+Shift+n`) e recarregar a config (`Ctrl+Shift+F5`).
 
-Os atalhos seguem os do Ghostty e funcionam sem prefix (o kitty repassa os `Ctrl+Shift+…` ao tmux como CSI u):
+Os atalhos funcionam sem prefix (o kitty repassa os `Ctrl+Shift+…` ao tmux como CSI u):
 
 | Atalho | Ação |
 |---|---|
