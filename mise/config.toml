@@ -1,0 +1,14 @@
+# Ferramentas globais (linkado em ~/.config/mise/config.toml).
+# Instalar/atualizar: mise install / mise upgrade
+# O Node continua com o fnm (ver zsh/custom/fnm.zsh).
+
+[tools]
+neovim = "latest"
+fzf = "latest"
+bat = "latest"
+fd = "latest"
+ripgrep = "latest"
+jq = "latest"
+lazygit = "latest"
+gh = "latest"
+workmux = "latest"

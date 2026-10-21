@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
+# Uso: ./install.sh                 instala pacotes do sistema (apt), ferramentas (mise) e links
+#      ./install.sh --no-packages   pula o apt (sem sudo); o resto roda igual
 set -euo pipefail
 
 DOTFILES="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 BIN_DIR="$HOME/.local/bin"
 BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+
+# Skills que o `workmux setup` instala no Claude Code e que o Codex não recebe
+WORKMUX_SKILLS=(workmux merge rebase worktree coordinator open-pr)
 
 log() {
   printf '[dotfiles] %s\n' "$1"
@@ -14,57 +19,30 @@ warn() {
   printf '[dotfiles][warn] %s\n' "$1" >&2
 }
 
-# 1. Install dependencies on Ubuntu/Debian
+# 1. Pacotes do sistema (Ubuntu/Debian). Ferramentas de CLI ficam com o mise.
 install_system_packages() {
   log "Instalando dependências do sistema..."
-  
+
   # Adiciona PPA do Fish
   if ! apt-cache policy | grep -q "ppa.launchpadcontent.net/fish-shell/release-3"; then
     log "Adicionando PPA do Fish Shell..."
     sudo add-apt-repository ppa:fish-shell/release-3 -y
   fi
-  
+
   # Adiciona PPA do Ghostty
   if ! apt-cache policy | grep -q "ppa.launchpadcontent.net/mkasberg/ghostty-ubuntu"; then
     log "Adicionando PPA do Ghostty..."
     sudo add-apt-repository ppa:mkasberg/ghostty-ubuntu -y
   fi
-  
+
   log "Atualizando pacotes..."
   sudo apt-get update
-  
-  log "Instalando fish, zsh, tmux, ghostty, git, curl e fzf..."
-  sudo apt-get install -y fish zsh tmux ghostty git curl fzf build-essential
+
+  log "Instalando fish, zsh, tmux, ghostty, git e curl..."
+  sudo apt-get install -y fish zsh tmux ghostty git curl build-essential
 }
 
-# 2. Install Neovim (Latest Stable)
-install_neovim() {
-  if command -v nvim >/dev/null 2>&1; then
-    local current_ver
-    current_ver=$(nvim --version | head -n1 | cut -d' ' -f2)
-    log "Neovim já está instalado: $current_ver"
-    return
-  fi
-  
-  log "Neovim não encontrado. Instalando a versão estável mais recente..."
-  mkdir -p "$BIN_DIR"
-  
-  local tmp_dir
-  tmp_dir=$(mktemp -d)
-  curl -Lo "$tmp_dir/nvim.tar.gz" https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-  tar -xzf "$tmp_dir/nvim.tar.gz" -C "$tmp_dir"
-  
-  cp -r "$tmp_dir"/nvim-linux-x86_64/bin/* "$BIN_DIR"/
-  mkdir -p "$HOME/.local/lib"
-  cp -r "$tmp_dir"/nvim-linux-x86_64/lib/* "$HOME/.local/lib/" || true
-  mkdir -p "$HOME/.local/share"
-  cp -r "$tmp_dir"/nvim-linux-x86_64/share/* "$HOME/.local/share/"
-  
-  rm -rf "$tmp_dir"
-  log "Neovim instalado com sucesso em $BIN_DIR/nvim"
-}
-
-# 3. Helper to backup and create symbolic links
+# 2. Helper to backup and create symbolic links
 backup_if_exists() {
   local target="$1"
 
@@ -102,6 +80,24 @@ clone_if_missing() {
 
   git clone --depth=1 "$repo" "$target"
   log "clonado: $repo -> $target"
+}
+
+# 3. Ferramentas de CLI (nvim, fzf, bat, fd, rg, jq, lazygit, gh, workmux) via mise/config.toml
+setup_mise() {
+  if ! command -v mise >/dev/null 2>&1 && [ ! -x "$BIN_DIR/mise" ]; then
+    log "instalando mise"
+    curl -fsSL https://mise.run | MISE_INSTALL_PATH="$BIN_DIR/mise" MISE_INSTALL_HELP=0 sh
+  fi
+
+  link_path "$DOTFILES/mise/config.toml" "$CONFIG_DIR/mise/config.toml"
+
+  local mise
+  mise="$(command -v mise || echo "$BIN_DIR/mise")"
+  log "instalando ferramentas do mise"
+  "$mise" install
+
+  # Deixa as ferramentas visíveis para o resto do script (nvim, workmux)
+  export PATH="$HOME/.local/share/mise/shims:$PATH"
 }
 
 setup_zsh() {
@@ -162,26 +158,58 @@ setup_tmux() {
   "$HOME/.tmux/plugins/tpm/bin/install_plugins"
 }
 
+setup_workmux() {
+  # Só o arquivo: o workmux grava estado em ~/.config/workmux
+  link_path "$DOTFILES/workmux/config.yaml" "$CONFIG_DIR/workmux/config.yaml"
+
+  if ! command -v workmux >/dev/null 2>&1; then
+    warn "workmux não encontrado; pulando hooks e skills"
+    return
+  fi
+
+  # Hooks de status e skills (Claude Code, Codex, OpenCode...); o setup exige terminal interativo
+  if [ -t 0 ] && [ -t 1 ]; then
+    workmux setup || warn "workmux setup falhou; rode manualmente: workmux setup"
+  else
+    warn "sem terminal interativo; rode depois: workmux setup"
+  fi
+
+  # O setup não instala skills no Codex: reaproveita as do Claude Code
+  if [ -d "$HOME/.codex" ]; then
+    for skill in "${WORKMUX_SKILLS[@]}"; do
+      [ -d "$HOME/.claude/skills/$skill" ] || continue
+      link_path "$HOME/.claude/skills/$skill" "$HOME/.codex/skills/$skill"
+    done
+  fi
+}
+
 main() {
+  local install_packages=1
+  if [ "${1:-}" = "--no-packages" ]; then
+    install_packages=0
+  fi
+
   log "Iniciando a instalação dos dotfiles e dependências..."
 
   # Detecta sistema operacional e instala pacotes
-  if [ -f /etc/debian_version ]; then
+  if [ "$install_packages" = 0 ]; then
+    log "Pulando pacotes do sistema (--no-packages)."
+  elif [ -f /etc/debian_version ]; then
     install_system_packages
   else
     warn "Sistema operacional não é baseado em Debian/Ubuntu. Pulando instalação de pacotes via apt."
   fi
 
-  # Instala o Neovim se necessário
-  install_neovim
-
   # Cria os diretórios necessários
   mkdir -p "$CONFIG_DIR"
   mkdir -p "$BIN_DIR"
 
+  # Ferramentas de CLI (inclui Neovim e workmux)
+  setup_mise
+
   # Linkar as configurações
   log "Configurando links simbólicos..."
-  
+
   # fish
   if [ -d "$DOTFILES/fish" ]; then
     link_path "$DOTFILES/fish" "$CONFIG_DIR/fish"
@@ -226,6 +254,10 @@ main() {
   # bat
   if [ -d "$DOTFILES/bat" ]; then
     link_path "$DOTFILES/bat" "$CONFIG_DIR/bat"
+    # Temas de bat/themes só aparecem depois de recompilar o cache
+    if command -v bat >/dev/null 2>&1; then
+      bat cache --build >/dev/null
+    fi
   fi
 
   # lazygit
@@ -257,6 +289,11 @@ main() {
     link_path "$DOTFILES/opencode/tui.json" "$CONFIG_DIR/opencode/tui.json"
     mkdir -p "$CONFIG_DIR/opencode/themes"
     link_path "$DOTFILES/opencode/catppuccin-latte-blue.json" "$CONFIG_DIR/opencode/themes/catppuccin-latte-blue.json"
+  fi
+
+  # workmux: config, hooks de status e skills (depois do Claude/Codex/opencode)
+  if [ -f "$DOTFILES/workmux/config.yaml" ]; then
+    setup_workmux
   fi
 
   # 4. Bootstrap/Instalação de plugins do LazyVim (Neovim)

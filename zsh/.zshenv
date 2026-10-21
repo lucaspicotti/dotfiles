@@ -6,6 +6,7 @@ export DOTFILES="${${(%):-%x}:A:h:h}"
 # PATH sem duplicatas; os primeiros têm prioridade
 typeset -U path
 path=(
+  $HOME/.local/share/mise/shims
   $HOME/.local/bin
   $HOME/go/bin
   /usr/local/go/bin

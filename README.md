@@ -16,12 +16,15 @@ chmod +x install.sh
 ./install.sh
 ```
 
+Sem sudo (pula o apt): `./install`, que é o mesmo que `./install.sh --no-packages`.
+
 ### O que o script `install.sh` faz?
 - Adiciona os PPAs oficiais do **Fish Shell** e **Ghostty**.
-- Atualiza as fontes e instala os pacotes do sistema (`fish`, `zsh`, `tmux`, `ghostty`, `git`, `curl`, `fzf`, `build-essential`).
+- Atualiza as fontes e instala os pacotes do sistema (`fish`, `zsh`, `tmux`, `ghostty`, `git`, `curl`, `build-essential`).
+- Instala o **mise** em `~/.local/bin` e, com ele, as ferramentas de CLI listadas em `mise/config.toml` (Neovim, fzf, bat, fd, ripgrep, jq, lazygit, gh, workmux).
 - Instala o **kitty** pelo instalador oficial em `~/.local/kitty.app` (com atalho no menu de aplicativos) e o **TPM** com os plugins do tmux.
 - Instala o **oh-my-zsh**, o **fnm** e clona os plugins externos do zsh (`zsh-autosuggestions`, `zsh-syntax-highlighting`) em `zsh/custom/plugins/`, que ficam fora do git.
-- Verifica se o **Neovim** está presente; se não estiver, baixa a versão estável mais recente do Neovim (AppImage/Binary) e extrai no caminho local do usuário (`~/.local/bin/nvim`).
+- Configura o **workmux**: linka `workmux/config.yaml`, roda `workmux setup` (hooks de status e skills; precisa de terminal interativo) e linka as skills no Codex, que o setup não cobre.
 - Faz backup de qualquer configuração existente em `~/.config` na pasta `~/.dotfiles_backup/` para evitar perdas de dados.
 - Cria os links simbólicos necessários de `~/dotfiles` para `~/.config`, além de `~/.zshrc` e `~/.zshenv`.
 - Linka os scripts de `scripts/` em `~/.local/bin`.
@@ -55,3 +58,25 @@ Os atalhos seguem os do Ghostty e funcionam sem prefix (o kitty repassa os `Ctrl
 | `Alt+1…8` / `Alt+9` | ir para a aba N / última aba |
 
 `Shift+Enter` envia `ESC+Enter` (quebra de linha no zsh, Claude Code, opencode e codex). O prefix do tmux continua `Ctrl+Space`; `prefix ?` lista todos os atalhos.
+
+## 🧰 mise
+
+As ferramentas de CLI ficam em `mise/config.toml` (linkado em `~/.config/mise/config.toml`), todas em `latest`:
+
+- `mise install`: instala o que faltar; `mise upgrade`: atualiza; `mise ls`: lista versões.
+- No shell interativo, `zsh/custom/mise.zsh` roda `mise activate`; os shims em `~/.local/share/mise/shims` (no `.zshenv`) cobrem shells não interativos, como hooks e o `run-shell` do tmux.
+- Ferramenta nova: `mise use -g <ferramenta>` grava direto no `mise/config.toml` do repositório.
+
+## 🌳 workmux
+
+[workmux](https://github.com/raine/workmux) cria um git worktree com uma janela do tmux por agente. Config global em `workmux/config.yaml`; por projeto, `.workmux.yaml` na raiz. Alias `wm`.
+
+| Atalho (prefix) | Ação |
+|---|---|
+| `C-s` | dashboard dos agentes |
+| `C-w` | dashboard na aba de worktrees |
+| `C-t` | sidebar |
+| `L` | último agente concluído/aguardando |
+| `Tab` | alterna entre os dois últimos agentes |
+
+As skills do workmux (`/worktree`, `/coordinator`, `/merge`, `/rebase`, `/open-pr`, `/workmux`) são instaladas pelo `workmux setup` e ficam fora do git.
