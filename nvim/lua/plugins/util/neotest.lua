@@ -5,6 +5,7 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
     "olimorris/neotest-phpunit",
+    "fredrikaverpil/neotest-golang",
   },
   config = function()
     require("neotest").setup({
@@ -14,6 +15,9 @@ return {
             -- Usa o phpunit do PATH; aliases do shell não valem dentro do Neovim
             return "phpunit"
           end,
+        }),
+        require("neotest-golang")({
+          go_test_args = { "-v", "-race", "-count=1" },
         }),
       },
     })

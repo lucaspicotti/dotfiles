@@ -39,10 +39,22 @@ return {
     require("mason-lspconfig").setup({
       ensure_installed = {
         "phpactor",
+        "gopls",
         "lua_ls",
       },
       automatic_enable = false,
     })
+
+    -- Formatters e linters do Mason (usados pelo conform e pelo nvim-lint)
+    local registry = require("mason-registry")
+    registry.refresh(function()
+      for _, name in ipairs({ "goimports", "gofumpt", "golangci-lint" }) do
+        local ok, pkg = pcall(registry.get_package, name)
+        if ok and not pkg:is_installed() then
+          pkg:install()
+        end
+      end
+    end)
 
     -- PHP (phpactor)
     vim.lsp.config("phpactor", {
@@ -53,6 +65,40 @@ return {
         ["language_server_phpstan.enabled"] = false,
         ["language_server_psalm.enabled"] = false,
         ["language_server_php_cs_fixer.enabled"] = true,
+      },
+    })
+
+    -- Go (gopls)
+    vim.lsp.config("gopls", {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = {
+        gopls = {
+          gofumpt = true,
+          usePlaceholders = true,
+          completeUnimported = true,
+          staticcheck = true,
+          analyses = {
+            unusedparams = true,
+            unusedwrite = true,
+            nilness = true,
+            shadow = true,
+          },
+          hints = {
+            assignVariableTypes = true,
+            compositeLiteralFields = true,
+            constantValues = true,
+            functionTypeParameters = true,
+            parameterNames = true,
+            rangeVariableTypes = true,
+          },
+          codelenses = {
+            generate = true,
+            test = true,
+            tidy = true,
+            upgrade_dependency = true,
+          },
+        },
       },
     })
 
@@ -90,6 +136,7 @@ return {
     -- Enable LSPs
     vim.lsp.enable({
       "phpactor",
+      "gopls",
       "lua_ls",
     })
 

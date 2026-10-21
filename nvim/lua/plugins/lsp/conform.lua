@@ -16,7 +16,8 @@ return {
       markdown = { "prettierd" },
       ["markdown.mdx"] = { "prettierd" },
 
-      go = { "goimports" },
+      -- Go: organiza imports e depois aplica o gofumpt
+      go = { "goimports", "gofumpt" },
 
       -- PHP (formatter)
       php = { "phpcbf" },
