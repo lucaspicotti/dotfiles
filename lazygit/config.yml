@@ -28,10 +28,11 @@ gui:
     searchingActiveBorderColor:
       - "#8be9fd"
       - bold
-  authorColors:
-    "*": "#bd93f9"
+    authorColors:
+      "*": "#bd93f9"
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
+      type: rawGit
 os:
   editPreset: nvim
