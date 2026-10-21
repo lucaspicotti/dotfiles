@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+set -u
+
+target=${1:-}
+preview_columns=${FZF_PREVIEW_COLUMNS:-90}
+preview_lines=${FZF_PREVIEW_LINES:-30}
+
+# Remove uma imagem Kitty deixada pelo preview anterior.
+printf '\033_Ga=d,d=A\033\\'
+
+if [[ -d "$target" ]]; then
+    if command -v eza >/dev/null 2>&1; then
+        eza --tree --level=2 --color=always -- "$target"
+    else
+        ls -F -- "$target"
+    fi
+    exit 0
+fi
+
+[[ -f "$target" ]] || exit 0
+mime=$(file --mime-type -Lb -- "$target")
+
+case "$mime" in
+    text/*|application/json|application/xml|application/javascript)
+        if command -v bat >/dev/null 2>&1; then
+            bat --color=always --line-range :200 -- "$target"
+        elif command -v batcat >/dev/null 2>&1; then
+            batcat --color=always --line-range :200 -- "$target"
+        else
+            sed -n '1,200p' -- "$target"
+        fi
+        ;;
+    application/pdf)
+        if command -v pdftotext >/dev/null 2>&1; then
+            if command -v bat >/dev/null 2>&1; then
+                pdftotext -f 1 -l 3 -layout -- "$target" - | bat --color=always --language=markdown
+            elif command -v batcat >/dev/null 2>&1; then
+                pdftotext -f 1 -l 3 -layout -- "$target" - | batcat --color=always --language=markdown
+            else
+                pdftotext -f 1 -l 3 -layout -- "$target" -
+            fi
+        else
+            echo 'PDF encontrado. Instale poppler-utils para visualizar o texto.'
+        fi
+        ;;
+    image/*)
+        if command -v kitten >/dev/null 2>&1 && [[ -n "${FZF_PREVIEW_COLUMNS:-}" ]]; then
+            kitten icat \
+                --clear \
+                --transfer-mode=memory \
+                --stdin=no \
+                --place="${preview_columns}x${preview_lines}@0x0" \
+                -- "$target"
+        elif command -v chafa >/dev/null 2>&1; then
+            chafa --format=symbols --colors=256 --align=center --size="${preview_columns}x${preview_lines}" -- "$target"
+        else
+            echo 'Instale chafa para visualizar imagens.'
+        fi
+        ;;
+    *)
+        file -- "$target"
+        ;;
+esac
