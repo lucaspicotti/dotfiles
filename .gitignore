@@ -3,3 +3,11 @@ fish/fish_variables
 # Plugins externos do zsh, clonados pelo install
 zsh/custom/plugins/zsh-autosuggestions/
 zsh/custom/plugins/zsh-syntax-highlighting/
+
+# Skills instaladas pelo `workmux setup` (o ~/.claude/skills aponta para ai-context/skills)
+ai-context/skills/workmux/
+ai-context/skills/merge/
+ai-context/skills/rebase/
+ai-context/skills/worktree/
+ai-context/skills/coordinator/
+ai-context/skills/open-pr/

@@ -1,0 +1,23 @@
+# Config global do workmux (linkada em ~/.config/workmux/config.yaml).
+# Referência completa: workmux config reference
+# Por projeto: .workmux.yaml na raiz do repositório (use "<global>" para herdar listas).
+
+# Novos worktrees saem da branch principal, não da branch atual
+base_branch: auto
+merge_strategy: rebase
+
+# Agente usado no placeholder <agent>
+agent: claude
+
+# Agente em cima, shell embaixo
+panes:
+  - command: <agent>
+    focus: true
+  - split: vertical
+    size: 15
+
+dashboard:
+  merge: "!workmux merge"
+
+sidebar:
+  group_by: project
