@@ -14,6 +14,7 @@ gh = "latest"
 tree-sitter = "latest"
 workmux = "latest"
 zoxide = "latest"
+codex = "latest"
 
 [tools."http:tmux-file-picker"]
 version = "main"

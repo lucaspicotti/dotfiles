@@ -1,8 +1,7 @@
 ---
-
 name: generate-pr-description
 description: Gera o título e a descrição de um Pull Request com base nas alterações da branch, seguindo obrigatoriamente o arquivo `template.md` localizado no mesmo diretório da skill. Use sempre que o usuário quiser preparar o texto de um PR para copiar no GitHub, Git Café, LazyGit ou outra interface.
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 # Gerar Descrição de Pull Request
 
