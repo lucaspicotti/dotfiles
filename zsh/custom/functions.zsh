@@ -12,9 +12,9 @@ for _cmd in psql pg_dump pg_restore; do
 done
 unset _cmd
 
-# bat no terminal, cat de verdade em pipes e redirecionamentos
+# bat no terminal, cat de verdade em pipes e redirecionamentos (ou sem bat)
 cat() {
-  if [[ -t 1 ]]; then
+  if [[ -t 1 ]] && (( $+commands[bat] )); then
     bat --paging=never "$@"
   else
     command cat "$@"

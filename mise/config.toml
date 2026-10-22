@@ -15,6 +15,9 @@ tree-sitter = "latest"
 workmux = "latest"
 zoxide = "latest"
 codex = "latest"
+claude = "latest"
+# O backend padrão do registro é npm, que dependeria do Node do fnm
+"aqua:anomalyco/opencode" = "latest"
 
 [tools."http:tmux-file-picker"]
 version = "main"

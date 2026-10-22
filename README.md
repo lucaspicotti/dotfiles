@@ -16,17 +16,17 @@ chmod +x install.sh
 ./install.sh
 ```
 
-Sem sudo (pula o apt): `./install`, que é o mesmo que `./install.sh --no-packages`.
+Sem sudo (pula o apt): `./install`, que é o mesmo que `./install.sh --no-packages`. Para o shell de login também virar zsh (SSH, TTY): `./install.sh --chsh`. O script é idempotente: pode rodar de novo para completar o que falhou (ex.: download que caiu).
 
 ### O que o script `install.sh` faz?
-- Atualiza as fontes e instala os pacotes do sistema (`zsh`, `tmux`, `git`, `curl`, `build-essential`).
-- Instala o **mise** em `~/.local/bin` e, com ele, as ferramentas de CLI listadas em `mise/config.toml` (Neovim, fzf, bat, fd, ripgrep, jq, lazygit, gh, tree-sitter, workmux, zoxide e tmux-file-picker).
-- Instala o **kitty** pelo instalador oficial em `~/.local/kitty.app` (com atalho no menu de aplicativos) e o **TPM** com os plugins do tmux.
-- Instala o **oh-my-zsh**, o **fnm** e clona os plugins externos do zsh (`zsh-autosuggestions`, `zsh-syntax-highlighting`) em `zsh/custom/plugins/`, que ficam fora do git.
+- Atualiza as fontes e instala os pacotes do sistema (`zsh`, `tmux`, `git`, `curl`, `build-essential`, `tree`, `unzip`, `xz-utils`, `fontconfig`, `file`) e, se disponíveis, os opcionais do preview do fzf e do clipboard (`xsel`, `eza`, `chafa`, `poppler-utils`). Como root (container), roda sem `sudo`.
+- Instala o **mise** em `~/.local/bin` e, com ele, as ferramentas de CLI listadas em `mise/config.toml` (Neovim, fzf, bat, fd, ripgrep, jq, lazygit, gh, tree-sitter, workmux, zoxide, tmux-file-picker, Codex, Claude Code e opencode).
+- Instala a **JetBrainsMono Nerd Font** em `~/.local/share/fonts`, o **kitty** pelo instalador oficial em `~/.local/kitty.app` (com atalho no menu de aplicativos) e o **TPM** com os plugins do tmux.
+- Instala o **oh-my-zsh**, o **fnm** com o Node LTS como default (se ainda não houver um) e clona os plugins externos do zsh (`zsh-autosuggestions`, `zsh-syntax-highlighting`) em `zsh/custom/plugins/`, que ficam fora do git.
 - Configura o **workmux**: linka `workmux/config.yaml`, roda `workmux setup` (hooks de status e skills; precisa de terminal interativo) e linka as skills no Codex, que o setup não cobre.
 - Linka as skills de `ai-context/skills` no Claude Code (`~/.claude/skills`, a pasta inteira) e no Codex (`~/.codex/skills`, uma a uma, preservando as skills próprias do Codex).
 - Faz backup de qualquer configuração existente em `~/.config` na pasta `~/.dotfiles_backup/` para evitar perdas de dados.
-- Cria os links simbólicos necessários de `~/dotfiles` para `~/.config`, além de `~/.zshrc`, `~/.zshenv` e `~/.gitconfig` (ajustes por máquina em `~/.gitconfig.local`, fora do git).
+- Cria os links simbólicos necessários de `~/dotfiles` para `~/.config` (nvim, kitty, bat, fd, lazygit, mise, opencode, workmux, `git/ignore`), além de `~/.zshrc`, `~/.zshenv`, `~/.tmux.conf` e `~/.gitconfig` (ajustes por máquina em `~/.gitconfig.local`, fora do git).
 - Linka os scripts de `scripts/` em `~/.local/bin`.
 - Roda o bootstrap do **LazyVim** em segundo plano para baixar e sincronizar todos os plugins do Neovim.
 
@@ -36,7 +36,7 @@ A config do zsh fica em `zsh/`:
 
 - `.zshenv`: PATH e variáveis de ambiente (vale também para shells não interativos).
 - `.zshrc`: carrega o oh-my-zsh, o tema e os plugins.
-- `custom/`: é o `ZSH_CUSTOM` do oh-my-zsh; todo `*.zsh` aqui é carregado automaticamente (aliases, funções, cores, fnm). O tema `lambda-dracula` fica em `custom/themes/`.
+- `custom/`: é o `ZSH_CUSTOM` do oh-my-zsh; todo `*.zsh` aqui é carregado automaticamente (aliases, funções, cores, fnm, mise, workmux). O tema é o `gozilla`, que vem com o oh-my-zsh e segue as cores ANSI do terminal (Dracula no kitty).
 
 O Node é gerenciado pelo `fnm`, que troca de versão ao entrar numa pasta com `.nvmrc` ou `.node-version`. Versões novas: `fnm install <versão>` e `fnm default <versão>`.
 

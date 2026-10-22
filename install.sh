@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Uso: ./install.sh                 instala pacotes do sistema (apt), ferramentas (mise) e links
 #      ./install.sh --no-packages   pula o apt (sem sudo); o resto roda igual
+#      ./install.sh --chsh          também troca o shell de login para zsh
 set -euo pipefail
 
 DOTFILES="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -16,15 +17,28 @@ warn() {
   printf '[dotfiles][warn] %s\n' "$1" >&2
 }
 
+# Como root (ex.: container) não há sudo
+SUDO=""
+if [ "$(id -u)" -ne 0 ]; then
+  SUDO="sudo"
+fi
+
 # 1. Pacotes do sistema (Ubuntu/Debian). Ferramentas de CLI ficam com o mise.
 install_system_packages() {
   log "Instalando dependências do sistema..."
 
   log "Atualizando pacotes..."
-  sudo apt-get update
+  $SUDO apt-get update
 
-  log "Instalando zsh, tmux, git, curl e tree..."
-  sudo apt-get install -y zsh tmux git curl build-essential tree
+  # unzip: instalador do fnm; xz-utils/fontconfig: Nerd Font; build-essential: parsers do treesitter
+  log "Instalando pacotes obrigatórios..."
+  $SUDO apt-get install -y zsh tmux git curl ca-certificates build-essential tree unzip xz-utils fontconfig file
+
+  # Usados pelo preview do fzf e pelo clipboard; nem toda versão do Ubuntu/Debian tem todos (eza)
+  local pkg
+  for pkg in xsel eza chafa poppler-utils; do
+    $SUDO apt-get install -y "$pkg" || warn "pacote opcional não instalado: $pkg"
+  done
 }
 
 # 2. Helper to backup and create symbolic links
@@ -79,7 +93,8 @@ setup_mise() {
   local mise
   mise="$(command -v mise || echo "$BIN_DIR/mise")"
   log "instalando ferramentas do mise"
-  "$mise" install
+  # Uma falha de rede não deve derrubar o resto da instalação
+  "$mise" install || warn "algumas ferramentas do mise falharam; rode de novo: mise install"
 
   # Deixa as ferramentas visíveis para o resto do script (nvim, workmux)
   export PATH="$HOME/.local/share/mise/shims:$PATH"
@@ -111,8 +126,79 @@ setup_zsh() {
   clone_if_missing https://github.com/zsh-users/zsh-syntax-highlighting "$plugins_dir/zsh-syntax-highlighting"
 }
 
+# Node LTS como default do fnm, só se ainda não houver um default
+setup_node() {
+  local fnm="$HOME/.local/share/fnm/fnm"
+  [ -x "$fnm" ] || return 0
+
+  if [ -e "$HOME/.local/share/fnm/aliases/default" ]; then
+    log "Node default já definido: $("$fnm" default)"
+    return
+  fi
+
+  local version
+  version="$("$fnm" ls-remote --lts --latest | awk '{print $1}')"
+  if [ -z "$version" ]; then
+    warn "não foi possível descobrir a última versão LTS do Node; rode: fnm install --lts"
+    return
+  fi
+
+  log "instalando Node $version (LTS)"
+  "$fnm" install "$version"
+  "$fnm" default "$version"
+}
+
+# Só com --chsh: login (SSH, TTY) passa a abrir zsh; o kitty já abre zsh de qualquer jeito
+change_login_shell() {
+  local zsh_path current
+  zsh_path="$(command -v zsh || true)"
+  if [ -z "$zsh_path" ]; then
+    warn "zsh não encontrado; shell de login mantido"
+    return
+  fi
+
+  current="$(getent passwd "$USER" | cut -d: -f7)"
+  if [ "$current" = "$zsh_path" ]; then
+    log "shell de login já é $zsh_path"
+    return
+  fi
+
+  if ! grep -qx "$zsh_path" /etc/shells; then
+    echo "$zsh_path" | $SUDO tee -a /etc/shells >/dev/null
+  fi
+
+  # Usuários de rede (LDAP/SSSD) não podem usar chsh
+  if chsh -s "$zsh_path"; then
+    log "shell de login trocado para $zsh_path (vale no próximo login)"
+  else
+    warn "chsh falhou; se o usuário for de rede (LDAP), peça a troca ao administrador"
+  fi
+}
+
+# JetBrainsMono Nerd Font, usada no kitty (ícones no nvim, tmux e workmux)
+install_nerd_font() {
+  if ! command -v fc-list >/dev/null 2>&1; then
+    warn "fontconfig não encontrado; pulando a Nerd Font"
+    return
+  fi
+
+  if fc-list | grep -q "JetBrainsMono NFM"; then
+    log "JetBrainsMono Nerd Font já instalada"
+    return
+  fi
+
+  local fonts_dir="$HOME/.local/share/fonts/JetBrainsMonoNerdFont"
+  log "instalando JetBrainsMono Nerd Font"
+  mkdir -p "$fonts_dir"
+  curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz \
+    | tar -xJ -C "$fonts_dir"
+  fc-cache -f "$fonts_dir" >/dev/null
+}
+
 setup_kitty() {
   local app="$HOME/.local/kitty.app"
+
+  install_nerd_font
 
   if [ ! -x "$app/bin/kitty" ]; then
     log "instalando kitty (instalador oficial)"
@@ -196,9 +282,22 @@ setup_codex_skills() {
 
 main() {
   local install_packages=1
-  if [ "${1:-}" = "--no-packages" ]; then
-    install_packages=0
-  fi
+  local change_shell=0
+  local arg
+  for arg in "$@"; do
+    case "$arg" in
+      --no-packages) install_packages=0 ;;
+      --chsh) change_shell=1 ;;
+      -h|--help)
+        sed -n '2,4p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+        return
+        ;;
+      *)
+        warn "opção desconhecida: $arg"
+        return 1
+        ;;
+    esac
+  done
 
   log "Iniciando a instalação dos dotfiles e dependências..."
 
@@ -221,11 +320,16 @@ main() {
   # Linkar as configurações
   log "Configurando links simbólicos..."
 
-  # zsh + oh-my-zsh
+  # zsh + oh-my-zsh + fnm
   setup_zsh
+  setup_node
+  if [ "$change_shell" = 1 ]; then
+    change_login_shell
+  fi
 
-  # git
+  # git (o ignore global é lido de ~/.config/git/ignore)
   link_path "$DOTFILES/git/gitconfig" "$HOME/.gitconfig"
+  link_path "$DOTFILES/git/ignore" "$CONFIG_DIR/git/ignore"
 
   # nvim (LazyVim)
   if [ -d "$DOTFILES/nvim" ]; then
@@ -252,6 +356,12 @@ main() {
   # bat
   if [ -d "$DOTFILES/bat" ]; then
     link_path "$DOTFILES/bat" "$CONFIG_DIR/bat"
+  fi
+
+  # fd
+  if [ -d "$DOTFILES/fd" ]; then
+    link_path "$DOTFILES/fd/config" "$CONFIG_DIR/fd/config"
+    link_path "$DOTFILES/fd/fdignore" "$CONFIG_DIR/fd/ignore"
   fi
 
   # lazygit
