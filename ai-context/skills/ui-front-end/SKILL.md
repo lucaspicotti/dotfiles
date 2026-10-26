@@ -1,6 +1,7 @@
 ---
 name: ui-front-end
 description: Skill para orientar IA na criação e evolução de interfaces do ERP Vendpago/Telemetria-ERP. Use quando a tarefa envolver telas novas, componentes visuais, tabela, formulário, SCSS do design system ou decisões de reaproveitamento de partials e scripts.
+disable-model-invocation: true
 ---
 
 # UI Front-End

@@ -1,6 +1,7 @@
 ---
 name: review-branch-changes
 description: Code review de alterações da branch, commitadas ou no working tree, usando `escopo.md` como contexto. No modo formal, grava o parecer em `review.md`. No modo colaborativo, responde no chat para revisar e corrigir a branch antes do PR. Use quando o usuário quiser detectar bugs, regressões, riscos, gaps de teste ou problemas de implementação na branch atual.
+disable-model-invocation: true
 ---
 
 # Review de Alterações da Branch

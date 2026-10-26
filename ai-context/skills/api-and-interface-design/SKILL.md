@@ -1,6 +1,7 @@
 ---
 name: api-and-interface-design
 description: "Orienta o design de APIs e interfaces estáveis. Use ao projetar APIs, limites de módulos ou qualquer interface pública. Use ao criar endpoints REST ou GraphQL, definir contratos de tipo entre módulos (PHP ou Go), ou estabelecer fronteiras entre frontend e backend."
+disable-model-invocation: true
 ---
 
 # Design de APIs e Interfaces

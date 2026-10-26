@@ -1,6 +1,7 @@
 ---
 name: clean-local-branches
 description: Lista branches Git locais e permite ao usuário selecionar uma ou mais branches para remoção segura.
+disable-model-invocation: true
 ---
 
 # Clean Local Branches

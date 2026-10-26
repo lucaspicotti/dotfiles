@@ -1,6 +1,7 @@
 ---
 name: api-doc-generator
 description: "Use this skill to generate Markdown API endpoint documentation from a .http test/reference file plus the source files implementing the feature (controller, service, DTOs, validators, routes). Triggers include: user provides or references a .http file and asks to document/generate documentation for its endpoints, mentions 'documentação de endpoints', 'gerar documentação da API', or asks to document a controller. Always produces the final file under /var/www/docs/api using the api_doc_template.md skeleton in this skill's directory. Do NOT use for OpenAPI/Swagger spec generation, Postman collections, or documentation unrelated to HTTP endpoints."
+disable-model-invocation: true
 ---
 
 # Gerador de documentação de endpoints de API

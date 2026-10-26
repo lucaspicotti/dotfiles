@@ -128,6 +128,6 @@ Estas não são etapas do fluxo de trabalho — são hábitos que devem estar pr
 
 ## Referências
 
-- [xp-practices](../praticas-xp/SKILL.md) — As 12 práticas do XP adaptadas para colaboração entre IA e humano.
+- [praticas.md](references/praticas.md) — As 12 práticas do XP adaptadas para colaboração entre IA e humano.
 - [roles.md](references/roles.md) — Papéis de Driver e Navigator, antipadrões e variações de programação em par.
 - Utilize a skill [tdd](../tdd/SKILL.md) para seguir o fluxo detalhado de desenvolvimento orientado por testes.

@@ -1,8 +1,3 @@
----
-name: xp-practices
-description: As 12 práticas do Extreme Programming adaptadas para colaboração entre IA e humano. Cada prática apresenta sua definição tradicional, sua adaptação para agentes de IA e orientações práticas para aplicar durante o desenvolvimento.
----
-
 # Práticas do XP — Adaptação para a Era da IA
 
 As 12 práticas do Extreme Programming, organizadas por categoria. Cada prática inclui sua definição tradicional, como ela se adapta à colaboração entre IA e humano e orientações concretas para o agente.
